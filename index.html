@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Irine Tahjiba Angela — Applied Economist | Monetary Transmission &amp; Credit Risk</title>
+<meta name="description" content="Applied economist working on monetary transmission, retail bank pricing, and credit risk. Estimates of Australian cash-rate pass-through to mortgage and deposit rates, and cross-country evidence on uncertainty and bank balance sheets."/>
+<meta name="author" content="Irine Tahjiba Angela"/>
+<meta property="og:title" content="Irine Tahjiba Angela — Applied Economist"/>
+<meta property="og:description" content="Monetary transmission, retail bank pricing, and credit risk."/>
+<meta property="og:type" content="profile"/>
+<meta property="og:url" content="https://researchnplcrisis-cloud.github.io/irine-tahjiba-angela/"/>
+<meta property="og:image" content="https://researchnplcrisis-cloud.github.io/irine-tahjiba-angela/og.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="theme-color" content="#F3F6FF"/>
+<link rel="canonical" href="https://researchnplcrisis-cloud.github.io/irine-tahjiba-angela/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   TOKENS
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --bg:#0A0D16;
+  --surface:#0E1220;
+  --surface-2:#131829;
+  --rule:#1C2233;
+  --rule-soft:#161B2B;
+
+  --ink:#F2E9EC;
+  --ink-2:#C6CCDA;
+  --muted:#8B93A8;
+  --faint:#5C6479;
+
+  --rose:#E0A2A8;      /* UI accent */
+  --gold:#C9A96E;      /* UI accent, secondary */
+
+  /* validated categorical series (dark, surface #0E1220) */
+  --s-mortgage:#d76c7c;
+  --s-saver:#3d9dce;
+  --s-td:#7E9C4A;
+  --s-ref:#8B93A8;     /* policy rate — neutral reference, not a peer series */
+
+  --measure:68ch;
+  --pad:clamp(1.25rem,5vw,3rem);
+  --maxw:1180px;
+
+  --f-serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink-2);
+  font-family:var(--f-sans);
+  font-size:17px;
+  line-height:1.65;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+@media (max-width:640px){body{font-size:16px}}
+
+::selection{background:rgba(224,162,168,.24);color:var(--ink)}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:2px}
+
+h1,h2,h3,h4{font-family:var(--f-serif);color:var(--ink);font-weight:500;line-height:1.2;letter-spacing:-.01em}
+a{color:inherit}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.measure{max-width:var(--measure)}
+
+/* ── section furniture ─────────────────────────────────────── */
+section{position:relative}
+.band{padding-block:clamp(4rem,10vw,7.5rem);border-top:1px solid var(--rule)}
+.eyebrow{
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--rose);font-weight:500;
+}
+.sec-head{display:flex;gap:1.5rem;align-items:baseline;flex-wrap:wrap;margin-bottom:2.5rem}
+.sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+.sec-no{font-family:var(--f-mono);font-size:.75rem;color:var(--faint);letter-spacing:.1em;padding-top:.35rem}
+.lede{font-size:clamp(1.02rem,1.6vw,1.15rem);color:var(--ink-2);max-width:var(--measure)}
+.lede strong{color:var(--ink);font-weight:500}
+
+/* ── nav ───────────────────────────────────────────────────── */
+nav{
+  position:fixed;inset:0 0 auto 0;z-index:90;height:58px;
+  display:flex;align-items:center;
+  background:rgba(10,13,22,.72);
+  backdrop-filter:blur(14px) saturate(1.4);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  border-bottom:1px solid transparent;
+  transition:border-color .35s ease,background .35s ease;
+}
+nav.solid{border-bottom-color:var(--rule);background:rgba(10,13,22,.9)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+.brand{
+  font-family:var(--f-serif);font-size:.95rem;letter-spacing:.02em;
+  color:var(--ink);text-decoration:none;white-space:nowrap;
+}
+.brand span{color:var(--rose)}
+.nav-links{display:flex;gap:1.75rem;list-style:none}
+.nav-links a{
+  font-size:.82rem;color:var(--muted);text-decoration:none;
+  letter-spacing:.01em;transition:color .2s ease;position:relative;
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink)}
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;
+  background:var(--rose);transition:right .28s ease;
+}
+.nav-links a:hover::after{right:0}
+@media (max-width:820px){.nav-links{display:none}}
+
+/* ── hero ──────────────────────────────────────────────────── */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  position:relative;padding-block:7rem 3rem;overflow:hidden;
+}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.hero-veil{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 85% 70% at 22% 45%, rgba(10,13,22,.94) 0%, rgba(10,13,22,.72) 42%, rgba(10,13,22,0) 78%),
+    linear-gradient(to bottom, rgba(10,13,22,.85) 0%, rgba(10,13,22,0) 22%, rgba(10,13,22,0) 62%, var(--bg) 100%);
+}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero-loc{margin-bottom:1.6rem}
+.hero h1{
+  font-size:clamp(2.5rem,7.2vw,4.6rem);line-height:1.02;
+  letter-spacing:-.025em;font-weight:400;margin-bottom:1.1rem;
+}
+.hero h1 .sur{display:block;color:var(--ink)}
+.hero-role{
+  font-family:var(--f-serif);font-size:clamp(1.05rem,2.2vw,1.42rem);
+  color:var(--rose);font-weight:400;line-height:1.4;
+  max-width:30ch;margin-bottom:1.6rem;
+}
+.hero-lede{max-width:56ch;color:var(--ink-2);font-size:clamp(.98rem,1.5vw,1.07rem)}
+
+.stat-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--rule);border-block:1px solid var(--rule);
+  margin-top:clamp(2.5rem,6vw,4rem);max-width:820px;
+}
+.stat{background:var(--bg);padding:1.4rem 1.35rem 1.5rem}
+.stat-v{
+  font-family:var(--f-mono);font-size:clamp(1.5rem,3.4vw,2.1rem);
+  color:var(--ink);font-weight:500;letter-spacing:-.02em;line-height:1;
+  display:block;margin-bottom:.6rem;font-variant-numeric:tabular-nums;
+}
+.stat-v.rose{color:var(--rose)}
+.stat-l{font-size:.78rem;color:var(--muted);line-height:1.45}
+@media (max-width:720px){
+  .stat-row{grid-template-columns:1fr}
+  .stat{padding:1.1rem 1.1rem 1.2rem}
+}
+
+.scroll-cue{
+  position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);z-index:2;
+  font-family:var(--f-mono);font-size:.62rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint);display:flex;
+  flex-direction:column;align-items:center;gap:.5rem;
+}
+.scroll-cue i{display:block;width:1px;height:30px;background:linear-gradient(var(--faint),transparent);animation:cue 2.6s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.25;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+@media (max-height:680px){.scroll-cue{display:none}}
+
+/* ── statement ─────────────────────────────────────────────── */
+.statement p{
+  font-family:var(--f-serif);font-size:clamp(1.15rem,2.4vw,1.6rem);
+  line-height:1.5;color:var(--ink);max-width:34ch;font-weight:400;
+}
+.statement p + p{margin-top:1.4rem;font-size:clamp(1rem,1.7vw,1.12rem);
+  font-family:var(--f-sans);color:var(--ink-2);max-width:var(--measure);line-height:1.65}
+.statement .rule{width:64px;height:2px;background:var(--rose);margin-bottom:2.2rem}
+
+/* ── practice areas ────────────────────────────────────────── */
+.practice{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media (min-width:900px){.practice{grid-template-columns:repeat(3,1fr)}}
+.pa{background:var(--surface);padding:clamp(1.5rem,3vw,2.2rem);display:flex;flex-direction:column;gap:.9rem;transition:background .3s ease}
+.pa:hover{background:var(--surface-2)}
+.pa-no{font-family:var(--f-mono);font-size:.7rem;color:var(--rose);letter-spacing:.14em}
+.pa h3{font-size:1.14rem;line-height:1.3}
+.pa .lead-tag{
+  display:inline-block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bg);background:var(--rose);
+  padding:.2rem .5rem;border-radius:2px;vertical-align:middle;margin-left:.5rem;
+}
+.pa p{font-size:.92rem;color:var(--muted);line-height:1.6}
+.pa ul{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--rule)}
+.pa li{font-size:.82rem;color:var(--ink-2);display:flex;gap:.6rem;line-height:1.45}
+.pa li::before{content:"";flex:0 0 4px;height:4px;background:var(--gold);border-radius:50%;margin-top:.55rem}
+
+/* ── figures ───────────────────────────────────────────────── */
+.figure{
+  border:1px solid var(--rule);background:var(--surface);
+  margin-block:2.5rem;position:relative;
+}
+.fig-head{padding:1.15rem 1.35rem 1rem;border-bottom:1px solid var(--rule)}
+.fig-no{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:.45rem}
+.fig-head h3{font-size:1.02rem;font-family:var(--f-sans);font-weight:600;color:var(--ink);letter-spacing:0;line-height:1.35}
+.fig-sub{font-size:.82rem;color:var(--muted);margin-top:.35rem;line-height:1.5}
+.fig-body{padding:1.2rem .85rem .5rem;position:relative;overflow-x:auto}
+.fig-foot{
+  padding:.85rem 1.35rem 1.1rem;border-top:1px solid var(--rule);
+  font-size:.74rem;color:var(--faint);line-height:1.55;
+}
+.legend{display:flex;flex-wrap:wrap;gap:1.1rem;padding:0 1.35rem 1rem}
+.lg{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--ink-2)}
+.lg i{width:14px;height:2px;border-radius:1px;flex:0 0 14px}
+.lg i.dash{background:repeating-linear-gradient(to right,var(--s-ref) 0 4px,transparent 4px 7px);height:2px}
+svg.chart{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:var(--f-mono);fill:var(--faint);font-size:10.5px;font-variant-numeric:tabular-nums}
+.chart .axlab{fill:var(--muted);font-size:10px}
+.chart .dlab{font-family:var(--f-sans);font-size:11px;font-weight:500}
+.chart .grid{stroke:var(--rule-soft);stroke-width:1}
+.chart .zero{stroke:var(--rule);stroke-width:1}
+.chart .band{fill:rgba(224,162,168,.045)}
+.chart .bandlab{fill:var(--faint);font-size:9px;letter-spacing:.08em}
+/* Below ~760px a 920-unit viewBox would scale its type down to ~4px.
+   Hold a minimum render width, let the figure scroll inside its own box,
+   and step the type up in user units so it lands back legible.
+   Must come after every other .chart rule — equal specificity, so source
+   order decides. */
+@media (max-width:760px){
+  svg.chart{min-width:700px}
+  .chart text{font-size:14px}
+  .chart .axlab{font-size:13.5px}
+  .chart .dlab{font-size:14px}
+  .chart .bandlab{font-size:12.5px}
+}
+
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;
+  transform:translate(-50%,-112%);transition:opacity .12s ease;
+  background:rgba(19,24,41,.97);border:1px solid var(--rule);
+  padding:.6rem .75rem;min-width:150px;
+  box-shadow:0 8px 28px rgba(0,0,0,.55);border-radius:3px;
+}
+.tip.on{opacity:1}
+.tip-d{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.45rem}
+.tip-r{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--ink-2);line-height:1.6;white-space:nowrap}
+.tip-r i{width:8px;height:8px;border-radius:50%;flex:0 0 8px}
+.tip-r b{margin-left:auto;font-family:var(--f-mono);color:var(--ink);font-weight:500;padding-left:1rem;font-variant-numeric:tabular-nums}
+
+details.data{border-top:1px solid var(--rule)}
+details.data summary{
+  padding:.75rem 1.35rem;font-family:var(--f-mono);font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  cursor:pointer;list-style:none;transition:color .2s ease;
+}
+details.data summary::-webkit-details-marker{display:none}
+details.data summary::before{content:"+ ";color:var(--rose)}
+details.data[open] summary::before{content:"− "}
+details.data summary:hover{color:var(--ink)}
+details.data .scroll{padding:0 1.35rem 1.2rem;max-height:320px;overflow:auto}
+
+/* ── tables ────────────────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin-block:2.5rem}
+table{border-collapse:collapse;width:100%;font-size:.85rem;min-width:520px}
+caption{
+  text-align:left;padding:1.15rem 1.35rem .9rem;border-bottom:1px solid var(--rule);
+  font-size:.94rem;color:var(--ink);font-weight:600;line-height:1.4;
+}
+caption .cap-no{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:.4rem;font-weight:400}
+th,td{padding:.62rem 1rem;text-align:right;border-bottom:1px solid var(--rule-soft)}
+th:first-child,td:first-child{text-align:left;padding-left:1.35rem}
+th:last-child,td:last-child{padding-right:1.35rem}
+thead th{
+  font-family:var(--f-mono);font-size:.68rem;font-weight:500;color:var(--muted);
+  letter-spacing:.06em;border-bottom:1px solid var(--rule);vertical-align:bottom;line-height:1.35;
+}
+tbody td{font-family:var(--f-mono);color:var(--ink-2);font-variant-numeric:tabular-nums}
+tbody td:first-child{font-family:var(--f-sans);color:var(--ink)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.hl td{background:rgba(224,162,168,.05)}
+tbody tr:hover td{background:rgba(255,255,255,.018)}
+.tbl-note{padding:.85rem 1.35rem 1.1rem;font-size:.74rem;color:var(--faint);border-top:1px solid var(--rule);line-height:1.55}
+.mark{color:var(--rose)}
+
+/* ── anchor callout ────────────────────────────────────────── */
+.anchor-box{
+  border:1px solid var(--rule);border-left:2px solid var(--rose);
+  background:var(--surface);padding:clamp(1.4rem,3vw,2rem);margin-block:2.5rem;
+}
+.anchor-box .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:1rem}
+.anchor-grid{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:1.4rem}
+@media (min-width:720px){.anchor-grid{grid-template-columns:1fr 1fr}}
+.ac{background:var(--surface-2);padding:1.1rem 1.25rem}
+.ac-d{font-family:var(--f-mono);font-size:.72rem;color:var(--rose);letter-spacing:.08em;margin-bottom:.85rem}
+.ac dl{display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem;font-size:.83rem}
+.ac dt{color:var(--muted)}
+.ac dd{font-family:var(--f-mono);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.ac dd.diff{color:var(--rose)}
+
+/* ── status pill ───────────────────────────────────────────── */
+.pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);
+  border:1px solid rgba(201,169,110,.32);padding:.32rem .7rem;border-radius:2px;
+}
+.pill i{width:5px;height:5px;border-radius:50%;background:var(--gold);flex:0 0 5px}
+
+/* ── evidence / entries ────────────────────────────────────── */
+.entry{
+  border-top:1px solid var(--rule);padding-block:1.6rem;
+  display:grid;gap:.3rem 2rem;
+}
+@media (min-width:860px){.entry{grid-template-columns:120px 1fr}}
+.entry:last-child{border-bottom:1px solid var(--rule)}
+.entry-meta{font-family:var(--f-mono);font-size:.72rem;color:var(--faint);letter-spacing:.06em;padding-top:.25rem}
+.entry h3{font-size:1.02rem;font-family:var(--f-sans);font-weight:600;line-height:1.4;margin-bottom:.4rem}
+.entry h3 a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);transition:border-color .2s ease,color .2s ease}
+.entry h3 a:hover{color:var(--rose);border-bottom-color:var(--rose)}
+.entry .venue{font-size:.83rem;color:var(--rose);margin-bottom:.6rem}
+.entry p{font-size:.89rem;color:var(--muted);line-height:1.6;max-width:var(--measure)}
+.entry .findings{list-style:none;margin-top:.7rem;display:flex;flex-direction:column;gap:.35rem}
+.entry .findings li{font-size:.85rem;color:var(--ink-2);display:flex;gap:.6rem;line-height:1.5}
+.entry .findings li::before{content:"—";color:var(--gold);flex:0 0 auto}
+
+.wp-list{list-style:none;display:flex;flex-direction:column;gap:.1rem}
+.wp{border-top:1px solid var(--rule-soft);padding:.85rem 0;display:grid;gap:.15rem 1.5rem}
+@media (min-width:860px){.wp{grid-template-columns:120px 1fr auto;align-items:baseline}}
+.wp:last-child{border-bottom:1px solid var(--rule-soft)}
+.wp .y{font-family:var(--f-mono);font-size:.72rem;color:var(--faint)}
+.wp a{font-size:.9rem;color:var(--ink-2);text-decoration:none;line-height:1.5;transition:color .2s ease}
+.wp a:hover{color:var(--rose)}
+.wp .src{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);letter-spacing:.08em;white-space:nowrap}
+
+/* ── method grid ───────────────────────────────────────────── */
+.mgrid{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media (min-width:820px){.mgrid{grid-template-columns:1fr 1fr}}
+.mcell{background:var(--surface);padding:clamp(1.35rem,3vw,1.9rem)}
+.mcell h3{font-size:.92rem;font-family:var(--f-sans);font-weight:600;color:var(--ink);margin-bottom:1rem;letter-spacing:0}
+.mcell ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.mcell li{font-size:.85rem;color:var(--muted);line-height:1.5;display:flex;gap:.65rem}
+.mcell li::before{content:"";flex:0 0 3px;height:3px;background:var(--faint);border-radius:50%;margin-top:.6rem}
+.mcell li b{color:var(--ink-2);font-weight:500}
+.repro{font-family:var(--f-mono);font-size:.72rem;color:var(--faint);line-height:1.9;word-break:break-all}
+.repro b{color:var(--ink-2);font-weight:500}
+
+/* ── contact ───────────────────────────────────────────────── */
+.contact-grid{display:grid;gap:2.5rem}
+@media (min-width:820px){.contact-grid{grid-template-columns:1.1fr 1fr;gap:4rem}}
+.clist{list-style:none;display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.clist li{background:var(--surface);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.clist .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.clist a,.clist span.v{font-size:.9rem;color:var(--ink-2);text-decoration:none;transition:color .2s ease;word-break:break-word}
+.clist a:hover{color:var(--rose)}
+
+footer{border-top:1px solid var(--rule);padding-block:2.5rem;font-size:.76rem;color:var(--faint)}
+footer .wrap{display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+
+/* ── reveal ────────────────────────────────────────────────────
+   Deliberately none. A scroll-triggered fade is decorative; a page
+   that renders blank when the trigger does not fire is not a
+   recoverable failure. Content is unconditionally visible. The .rv
+   class is retained in the markup as a hook and has no effect. */
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+  .scroll-cue i{animation:none}
+}
+</style>
+<style>
+/* ══════════════════════════════════════════════════════════════
+   LUMINOUS ECONOMIC OBSERVATORY — 2026 redesign
+   A light, spatial interface with restrained motion and strong evidence hierarchy.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#F3F6FF;
+  --surface:rgba(255,255,255,.72);
+  --surface-2:rgba(246,248,255,.88);
+  --rule:rgba(58,72,128,.16);
+  --rule-soft:rgba(58,72,128,.09);
+  --ink:#14213D;
+  --ink-2:#34405F;
+  --muted:#66708E;
+  --faint:#8790A9;
+  --rose:#F04E78;
+  --gold:#E49B22;
+  --violet:#7B61FF;
+  --cyan:#12A7C7;
+  --lime:#65A83A;
+  --cobalt:#3154D9;
+  --s-mortgage:#F04E78;
+  --s-saver:#128FB3;
+  --s-td:#6A9F35;
+  --s-ref:#65708E;
+  --shadow-sm:0 12px 35px rgba(48,63,125,.10);
+  --shadow-lg:0 28px 90px rgba(49,84,217,.16);
+  --glass-border:rgba(255,255,255,.78);
+}
+
+body{
+  background:
+    radial-gradient(circle at 7% 8%,rgba(18,167,199,.16),transparent 25rem),
+    radial-gradient(circle at 94% 18%,rgba(123,97,255,.16),transparent 28rem),
+    radial-gradient(circle at 78% 78%,rgba(240,78,120,.11),transparent 26rem),
+    linear-gradient(145deg,#F9FBFF 0%,#F2F5FF 45%,#FFF8FB 100%);
+  background-attachment:fixed;
+  color:var(--ink-2);
+}
+html,body{overflow-x:clip}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.35;
+  background-image:linear-gradient(rgba(49,84,217,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(49,84,217,.045) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+::selection{background:rgba(123,97,255,.22);color:var(--ink)}
+:focus-visible{outline:3px solid var(--violet);outline-offset:4px}
+
+.skip-link{
+  position:fixed;left:1rem;top:-5rem;z-index:200;background:#fff;color:var(--ink);
+  padding:.75rem 1rem;border-radius:999px;box-shadow:var(--shadow-sm);text-decoration:none;
+}
+.skip-link:focus{top:1rem}
+
+nav{
+  height:66px;background:rgba(249,251,255,.72);border-bottom:1px solid rgba(255,255,255,.72);
+  box-shadow:0 6px 24px rgba(37,52,110,.06);backdrop-filter:blur(22px) saturate(1.35);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);
+}
+nav.solid{background:rgba(249,251,255,.92);border-bottom-color:var(--rule)}
+.brand{font-weight:600;color:var(--ink)}
+.brand span{color:var(--rose)}
+.nav-links{align-items:center}
+.nav-links a{color:var(--muted);font-weight:500}
+.nav-links a:hover,.nav-links a:focus-visible,.nav-links a.active{color:var(--cobalt)}
+.nav-links a::after{height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--rose));border-radius:2px}
+.nav-links a.active::after{right:0}
+.menu-toggle{
+  display:none;position:relative;width:44px;height:44px;border:1px solid var(--rule);border-radius:14px;
+  background:rgba(255,255,255,.7);color:var(--ink);cursor:pointer;
+  box-shadow:var(--shadow-sm);
+}
+.menu-toggle span{position:absolute;left:12px;width:18px;height:2px;background:currentColor;border-radius:9px;transition:transform .25s ease,opacity .25s ease}
+.menu-toggle span:nth-child(1){top:14px}.menu-toggle span:nth-child(2){top:21px}.menu-toggle span:nth-child(3){top:28px}
+
+.hero{min-height:100svh;padding-block:8rem 4rem;isolation:isolate}
+#gl{opacity:.42;mix-blend-mode:multiply;filter:saturate(1.35)}
+.hero-veil{
+  background:
+    radial-gradient(ellipse 78% 72% at 21% 43%,rgba(249,251,255,.98) 0%,rgba(249,251,255,.88) 39%,rgba(243,246,255,.22) 73%),
+    linear-gradient(to bottom,rgba(243,246,255,.95),rgba(243,246,255,0) 25%,rgba(243,246,255,.28) 70%,var(--bg));
+}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:clamp(2rem,5vw,5rem);align-items:center}
+.hero-copy{position:relative;z-index:3}
+.hero-loc{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1.4rem;color:var(--cobalt);background:rgba(255,255,255,.74);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:.55rem .85rem;box-shadow:var(--shadow-sm)}
+.hero-loc::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 5px rgba(101,168,58,.12)}
+.hero h1{font-size:clamp(3rem,7vw,5.6rem);letter-spacing:-.055em;font-weight:500;max-width:10ch;margin-bottom:1rem;text-wrap:balance}
+.hero h1 .sur{display:block;background:linear-gradient(105deg,var(--cobalt),var(--violet) 52%,var(--rose));background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero-role{font-family:var(--f-sans);font-weight:600;color:var(--ink);font-size:clamp(1.05rem,2vw,1.35rem);max-width:37ch}
+.hero-lede{font-size:1rem;color:var(--muted);max-width:58ch;line-height:1.72}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.6rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.65rem;min-height:46px;padding:.72rem 1.05rem;border-radius:14px;
+  text-decoration:none;font-size:.85rem;font-weight:600;transition:transform .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.btn:hover{transform:translateY(-3px)}
+.btn-primary{color:#fff;background:linear-gradient(120deg,var(--cobalt),var(--violet) 60%,var(--rose));box-shadow:0 14px 34px rgba(77,70,210,.28)}
+.btn-secondary{color:var(--cobalt);background:rgba(255,255,255,.7);border:1px solid rgba(49,84,217,.16);box-shadow:var(--shadow-sm)}
+.btn .arr{font-family:var(--f-mono);font-size:1rem}
+
+.stat-row{max-width:none;margin-top:2rem;background:transparent;border:0;gap:.75rem;perspective:1000px}
+.stat{
+  position:relative;overflow:hidden;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);
+  border-radius:18px;padding:1rem;box-shadow:var(--shadow-sm);backdrop-filter:blur(14px);
+  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
+  transition:transform .18s ease,box-shadow .25s ease;
+}
+.stat::after{content:"";position:absolute;inset:auto -20% -55% 38%;height:100%;background:radial-gradient(circle,rgba(18,167,199,.16),transparent 65%);pointer-events:none}
+.stat:nth-child(2)::after{background:radial-gradient(circle,rgba(240,78,120,.18),transparent 65%)}
+.stat:nth-child(3)::after{background:radial-gradient(circle,rgba(123,97,255,.17),transparent 65%)}
+.stat:hover{box-shadow:0 22px 45px rgba(49,84,217,.16)}
+.stat-v{color:var(--cobalt);font-size:clamp(1.5rem,3vw,2rem)}
+.stat-v.rose{color:var(--rose)}
+.stat-l{color:var(--muted)}
+
+.orbit-stage{position:relative;min-height:560px;display:grid;place-items:center;perspective:1100px;transform-style:preserve-3d}
+.orbit-stage::before{
+  content:"";position:absolute;width:min(90%,520px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(255,255,255,.95),rgba(18,167,199,.16) 25%,rgba(123,97,255,.15) 52%,rgba(240,78,120,.09) 67%,transparent 70%);
+  filter:drop-shadow(0 38px 55px rgba(49,84,217,.20));transform:rotateX(62deg) rotateZ(-12deg) translateZ(-40px);
+}
+.orbit{position:absolute;width:74%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(49,84,217,.26);transform-style:preserve-3d;animation:orbit-spin 16s linear infinite}
+.orbit::before,.orbit::after{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 8px rgba(18,167,199,.12),0 0 30px rgba(18,167,199,.75)}
+.orbit::before{left:10%;top:20%}.orbit::after{right:8%;bottom:24%;background:var(--rose);box-shadow:0 0 0 8px rgba(240,78,120,.10),0 0 30px rgba(240,78,120,.65)}
+.orbit-b{width:56%;border-color:rgba(123,97,255,.28);animation-direction:reverse;animation-duration:11s;transform:rotateX(72deg) rotateY(18deg)}
+.orbit-c{width:90%;border-style:dashed;border-color:rgba(18,167,199,.22);animation-duration:25s;transform:rotateX(70deg) rotateY(-12deg)}
+.core{
+  position:relative;z-index:3;width:240px;aspect-ratio:1;border-radius:42%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  color:#fff;background:linear-gradient(145deg,rgba(49,84,217,.95),rgba(123,97,255,.94) 52%,rgba(240,78,120,.9));
+  border:1px solid rgba(255,255,255,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 32px 70px rgba(80,66,202,.35);
+  transform:rotate(-8deg) translateZ(80px);animation:core-float 6s ease-in-out infinite;
+}
+.core::before{content:"";position:absolute;inset:10px;border-radius:38%;border:1px solid rgba(255,255,255,.25)}
+.core-kicker{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.18em;opacity:.75;margin-bottom:.65rem}
+.core strong{font-family:var(--f-serif);font-size:1.75rem;font-weight:500}.core small{font-size:.72rem;opacity:.8;margin-top:.65rem}
+.signal-chip{
+  position:absolute;z-index:4;padding:.7rem .85rem;border-radius:14px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.94);
+  box-shadow:var(--shadow-sm);backdrop-filter:blur(16px);font-family:var(--f-mono);font-size:.65rem;color:var(--ink);animation:chip-float 7s ease-in-out infinite;
+}
+.signal-chip b{display:block;color:var(--cobalt);font-size:.9rem;margin-top:.2rem}.chip-a{left:1%;top:20%}.chip-b{right:0;top:28%;animation-delay:-2s}.chip-c{right:8%;bottom:16%;animation-delay:-4s}.chip-c b{color:var(--rose)}
+@keyframes orbit-spin{to{transform:rotateX(68deg) rotateY(14deg) rotateZ(360deg)}}
+@keyframes core-float{50%{transform:rotate(-4deg) translateY(-14px) translateZ(98px)}}
+@keyframes chip-float{50%{transform:translateY(-12px) rotate(1.5deg)}}
+
+.scroll-cue{color:var(--faint)}
+.scroll-cue i{background:linear-gradient(var(--violet),transparent)}
+.band{border-top:0;padding-block:clamp(4.5rem,9vw,7.5rem)}
+.band::before{content:"";position:absolute;inset:1rem var(--pad);max-width:calc(var(--maxw) + 6rem);margin:auto;border-top:1px solid var(--rule);pointer-events:none}
+.sec-head{align-items:center;margin-bottom:2rem}
+.sec-head h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.035em}
+.sec-no{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;color:var(--cobalt);background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow-sm);padding:0}
+.lede{color:var(--muted);line-height:1.72}
+
+.statement .wrap{
+  max-width:min(var(--maxw),980px);padding:clamp(2rem,5vw,4rem);border-radius:32px;
+  background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(245,247,255,.64));border:1px solid rgba(255,255,255,.9);
+  box-shadow:var(--shadow-lg);overflow:hidden;
+}
+.statement .wrap::after{content:"";position:absolute;width:250px;height:250px;right:-80px;top:-90px;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.18),transparent 68%)}
+.statement .rule{background:linear-gradient(90deg,var(--cyan),var(--violet),var(--rose));height:5px;border-radius:9px;width:86px}
+.statement p{color:var(--ink);max-width:30ch;font-size:clamp(1.35rem,3vw,2.15rem);letter-spacing:-.02em}
+.story-more{margin-top:1.3rem;max-width:var(--measure);position:relative;z-index:2}
+.story-more summary,.research-details summary,.paper-vault summary,.method-vault summary{cursor:pointer;list-style:none;color:var(--cobalt);font-weight:600;font-size:.86rem;display:flex;align-items:center;gap:.6rem}
+.story-more summary::before,.research-details summary::before,.paper-vault summary::before,.method-vault summary::before{content:"+";display:grid;place-items:center;width:26px;height:26px;border-radius:9px;color:#fff;background:linear-gradient(135deg,var(--cobalt),var(--violet));font-family:var(--f-mono);flex:0 0 26px}
+.story-more[open] summary::before,.research-details[open] summary::before,.paper-vault[open] summary::before,.method-vault[open] summary::before{content:"−"}
+.story-more p{margin-top:1.2rem!important;font-family:var(--f-sans)!important;font-size:1rem!important;line-height:1.72!important;color:var(--muted)!important;max-width:var(--measure)!important}
+.compact-more{margin-block:1rem 2.2rem;padding:1rem 1.1rem;border-radius:16px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow-sm)}
+
+.practice{background:transparent;border:0;gap:1rem;perspective:1200px}
+.pa,.mcell,.entry,.figure,.tbl-wrap,.anchor-box,.clist{
+  background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow-sm);backdrop-filter:blur(14px);
+}
+.pa{border-radius:24px;overflow:hidden;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease,box-shadow .25s ease,background .25s ease}
+.pa:hover{background:rgba(255,255,255,.9);box-shadow:0 26px 55px rgba(49,84,217,.15)}
+.pa:nth-child(1){border-top:4px solid var(--cyan)}.pa:nth-child(2){border-top:4px solid var(--violet)}.pa:nth-child(3){border-top:4px solid var(--rose)}
+.pa-no{color:var(--cobalt)}
+.pa h3{font-family:var(--f-sans);font-weight:600;color:var(--ink)}
+.pa .lead-tag{background:linear-gradient(120deg,var(--cobalt),var(--violet));color:#fff}
+.pa p{color:var(--muted)}
+.pa li{color:var(--ink-2)}
+.pa li::before{background:linear-gradient(135deg,var(--cyan),var(--violet))}
+
+#passthrough{background:linear-gradient(180deg,transparent,rgba(221,230,255,.48) 14%,rgba(255,255,255,.24) 84%,transparent)}
+.anchor-box{border-left:5px solid var(--rose);border-radius:24px;overflow:hidden}
+.anchor-grid{background:transparent;border:0;gap:.8rem}
+.ac{border-radius:18px;background:rgba(243,246,255,.86);border:1px solid var(--rule)}
+.figure,.tbl-wrap{border-radius:24px;overflow:hidden}
+.fig-head{background:linear-gradient(105deg,rgba(49,84,217,.06),rgba(123,97,255,.06),rgba(240,78,120,.05))}
+.fig-no{color:var(--cobalt)}
+.fig-head h3{color:var(--ink)}
+.fig-sub,.fig-foot{color:var(--muted)}
+.legend{background:rgba(248,250,255,.56)}
+.chart .grid{stroke:rgba(58,72,128,.13)}.chart .zero{stroke:rgba(58,72,128,.22)}.chart text{fill:#64708D}.chart .axlab{fill:#4E5C79}.chart .band{fill:rgba(123,97,255,.045)}
+.tip{background:rgba(20,33,61,.95);border-color:rgba(255,255,255,.18);box-shadow:0 18px 40px rgba(20,33,61,.28)}
+.tip-d,.tip-r{color:#DCE4FF}.tip-r b{color:#fff}
+details.data summary{color:var(--cobalt)}
+details.data .scroll{background:rgba(248,250,255,.72)}
+th,td{border-bottom-color:var(--rule-soft)}thead th{color:var(--muted)}tbody td{color:var(--ink-2)}tbody td:first-child{color:var(--ink)}
+
+.mgrid{background:transparent;border:0;gap:1rem}
+.method-vault{margin-top:3rem;padding:1.2rem 1.35rem;border-radius:22px;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow-sm)}
+.method-vault>summary{font-family:var(--f-serif);font-size:1.2rem;color:var(--ink)}
+.method-vault>.mgrid{margin-top:1.2rem}
+.mcell{border-radius:22px;transition:transform .2s ease,box-shadow .25s ease;transform:translateZ(0)}
+.mcell:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(49,84,217,.13)}
+.mcell:nth-child(1){border-top:4px solid var(--cyan)}.mcell:nth-child(2){border-top:4px solid var(--violet)}.mcell:nth-child(3){border-top:4px solid var(--gold)}.mcell:nth-child(4){border-top:4px solid var(--lime)}
+.mcell li{color:var(--muted)}.mcell li b{color:var(--ink)}
+.research-details{padding:1.15rem 1.35rem 1.4rem}
+.research-details .repro{margin-top:1rem;padding:1rem;border-radius:16px;background:rgba(243,246,255,.88);border:1px solid var(--rule);color:var(--muted)}
+.repro b{color:var(--ink)}
+
+.entry{border-radius:22px;margin-bottom:1rem;padding:1.5rem;transition:transform .25s ease,box-shadow .25s ease}
+.entry:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(49,84,217,.13)}
+.entry-meta{color:var(--cobalt)}
+.entry h3,.entry h3 a{color:var(--ink)}
+.entry h3 a:hover{color:var(--violet)}
+.entry .venue{color:var(--rose)}
+.entry p{color:var(--muted)}
+.entry .findings li{color:var(--ink-2)}
+.paper-vault{margin-top:2rem;padding:1.2rem 1.35rem;border-radius:22px;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow-sm)}
+.paper-vault .wp-list{margin-top:1rem}
+.wp{border-color:var(--rule-soft)}.wp a{color:var(--ink-2)}.wp a:hover{color:var(--violet)}
+
+.contact-grid{padding:clamp(1.5rem,4vw,2.6rem);border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(246,248,255,.66));border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow-lg)}
+.clist{border-radius:20px;overflow:hidden;background:var(--rule);box-shadow:none}
+.clist li{background:rgba(255,255,255,.78)}
+.clist a{color:var(--cobalt);font-weight:500}.clist a:hover{color:var(--rose)}
+footer{border-top-color:var(--rule)}
+
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}.orbit-stage{min-height:420px;max-width:680px;width:100%;margin-inline:auto}.core{width:210px}.signal-chip{font-size:.6rem}
+}
+@media (max-width:820px){
+  nav .wrap{position:relative}.menu-toggle{display:grid}
+  .nav-links{
+    display:grid;position:absolute;left:var(--pad);right:var(--pad);top:58px;gap:.25rem;padding:.65rem;
+    border-radius:18px;background:rgba(249,251,255,.96);border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow-lg);
+    opacity:0;visibility:hidden;transform:translateY(-10px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s ease;
+  }
+  nav.nav-open .nav-links{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .nav-links a{display:block;padding:.72rem .8rem;border-radius:11px}.nav-links a:hover{background:rgba(49,84,217,.07)}
+  nav.nav-open .menu-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}nav.nav-open .menu-toggle span:nth-child(2){opacity:0}nav.nav-open .menu-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+@media (max-width:720px){
+  .hero{padding-block:6.8rem 3rem;min-height:auto}.hero-grid{gap:1rem}.hero h1{font-size:clamp(3rem,15vw,4.5rem)}
+  .hero-actions{flex-direction:column}.btn{justify-content:center}.stat-row{grid-template-columns:1fr}.stat{padding:1.1rem}
+  .orbit-stage{min-height:390px;transform:scale(.9);margin-block:-1rem}.core{width:190px}.chip-a{left:0}.chip-b{right:0}.chip-c{right:2%}
+  .statement .wrap{margin-inline:1rem}.statement p{font-size:1.45rem}.sec-head h2{font-size:2.2rem}
+  .entry{padding:1.25rem}.paper-vault{padding:1rem}
+}
+@media (max-width:430px){
+  .orbit-stage{min-height:350px;transform:scale(.82);margin-inline:-8%;width:116%}.signal-chip{padding:.55rem .65rem}.core{width:180px}
+  .chip-a{top:12%}.chip-b{top:22%}.chip-c{bottom:12%}
+}
+@media (prefers-reduced-motion:reduce){
+  .orbit,.core,.signal-chip{animation:none!important}.pa,.stat{transform:none!important}
+}
+</style>
+<noscript><style>
+  /* Figures are drawn in JS; the numbers behind them are in Tables 1 and 2,
+     which are static markup and survive. */
+  .fig-body::after{content:"This figure is drawn with JavaScript. The underlying estimates are in Table 1 and Table 2 below.";
+    display:block;padding:1.5rem .5rem;font-size:.85rem;color:var(--muted);line-height:1.6}
+  details.data{display:none}
+</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Irine Tahjiba Angela<span>.</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open site navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="site-menu">
+      <li><a href="#practice">Practice</a></li>
+      <li><a href="#passthrough">Pass-Through Gap</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<section class="hero" id="top">
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="hero-veil" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow hero-loc">Sydney · Australia</div>
+      <h1>Irine Tahjiba<span class="sur">Angela</span></h1>
+      <p class="hero-role">Applied economist — monetary transmission, bank pricing, and credit risk</p>
+      <p class="hero-lede">
+        I study what happens after policy moves: how much reaches borrowers and savers,
+        how quickly bank balance sheets adjust, and where financial risk accumulates.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#passthrough">Explore the evidence <span class="arr">↘</span></a>
+        <a class="btn btn-secondary" href="#evidence">View research <span class="arr">→</span></a>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-v">100<span style="font-size:.6em">%</span></span>
+          <span class="stat-l">mortgage reference-rate pass-through in the 2022–23 tightening</span>
+        </div>
+        <div class="stat">
+          <span class="stat-v rose">55.3<span style="font-size:.6em">%</span></span>
+          <span class="stat-l">online-saver pass-through over the same episode</span>
+        </div>
+        <div class="stat">
+          <span class="stat-v">1.35<span style="font-size:.6em">pp</span></span>
+          <span class="stat-l">persistent widening in the borrower–saver wedge</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="orbit-stage" aria-hidden="true">
+      <div class="orbit orbit-a"></div>
+      <div class="orbit orbit-b"></div>
+      <div class="orbit orbit-c"></div>
+      <div class="core">
+        <span class="core-kicker">POLICY SHOCK</span>
+        <strong>Transmission</strong>
+        <small>Rates · Funding · Credit</small>
+      </div>
+      <div class="signal-chip chip-a">Mortgage reference<b>100%</b></div>
+      <div class="signal-chip chip-b">Online saver<b>55.3%</b></div>
+      <div class="signal-chip chip-c">Wedge persists<b>+1.35 pp</b></div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+</section>
+
+<main id="main">
+
+<!-- ══════════════════════ STATEMENT ═════════════════════════ -->
+<section class="band statement">
+  <div class="wrap rv">
+    <div class="rule"></div>
+    <p>Transmission is one problem wearing two costumes.</p>
+    <details class="story-more">
+      <summary>How the research connects</summary>
+      <p>
+        A central bank moves the policy rate and asks how much reaches mortgage and deposit
+        pricing. A supervisor watches uncertainty rise and asks how much reaches loan losses
+        and funding costs. Both questions run through the same balance sheet, and both are
+        answered with the same machinery: identify the shock, measure what arrives, and
+        establish whether the shortfall is a lag or a level. My work applies that machinery
+        to Australian retail rates and to a cross-country panel of <strong>768 to 4,847
+        banks across 31 to 37 countries</strong>.
+      </p>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRACTICE AREAS ═══════════════════════ -->
+<section class="band" id="practice">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">01</span>
+      <h2>Practice areas</h2>
+    </div>
+
+    <div class="practice rv">
+      <article class="pa">
+        <span class="pa-no">I</span>
+        <h3>Monetary transmission &amp; retail pricing<span class="lead-tag">Lead</span></h3>
+        <p>
+          Cash-rate pass-through into mortgage, at-call savings, and term deposit rates.
+          Episode-level estimation across the 2022–23 tightening, the 2025 easing, and the
+          tightening under way since February 2026.
+        </p>
+        <ul>
+          <li>Pass-through ratios by product and episode</li>
+          <li>Adjustment paths — separating lag from level</li>
+          <li>The borrower–saver wedge and its persistence</li>
+          <li>Conditional transmission scenarios for a policy move</li>
+        </ul>
+      </article>
+
+      <article class="pa">
+        <span class="pa-no">II</span>
+        <h3>Credit risk &amp; financial stability</h3>
+        <p>
+          How macroeconomic uncertainty transmits to bank asset quality and the price of
+          deposit funding. Cross-country panel evidence, 2000–2024, with a published
+          single-country application.
+        </p>
+        <ul>
+          <li>Uncertainty into non-performing loan ratios</li>
+          <li>Deposit funding costs and safe-haven demand</li>
+          <li>Attenuation by fiscal capacity and balance-sheet strength</li>
+          <li>Provisioning, capital adequacy, macroprudential settings</li>
+        </ul>
+      </article>
+
+      <article class="pa">
+        <span class="pa-no">III</span>
+        <h3>Measurement &amp; econometric design</h3>
+        <p>
+          The part that decides whether an estimate means anything: how the shock is
+          defined, which estimator the data can support, and what the published series
+          can and cannot answer.
+        </p>
+        <ul>
+          <li>Dynamic panels — System GMM, Driscoll–Kraay</li>
+          <li>Instrumental variables and weak-instrument diagnostics</li>
+          <li>Quantile regression; cross-sectional dependence testing</li>
+          <li>Reproducible pipelines with hashed inputs</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FLAGSHIP: PASS-THROUGH ════════════════ -->
+<section class="band" id="passthrough">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">02</span>
+      <h2>The Pass-Through Gap</h2>
+      <span class="pill"><i></i>Working analysis · retail data to June 2026</span>
+    </div>
+
+    <p class="lede rv" style="margin-bottom:1.2rem">
+      <strong>Retail interest rate adjustment in Australia, 2022 to 2026.</strong>
+      Built entirely from published RBA statistical tables. It measures what arrived; it
+      does not model why, and it forecasts nothing.
+    </p>
+
+    <details class="story-more compact-more rv">
+      <summary>What changed across policy cycles</summary>
+      <p>
+        Across the 2022–23 tightening, banks passed the full cash rate increase to advertised
+        mortgage rates and 55.3 per cent of it to online savings accounts. In the tightening
+        under way since February 2026 they have passed 106.7 per cent to online savings and
+        153.3 per cent to one-year term deposits. Deposit pricing has moved from lagging the
+        cash rate to leading it.
+      </p>
+    </details>
+
+    <!-- ── the identification ── -->
+    <div class="anchor-box rv">
+      <span class="k">The cleanest observation in the analysis</span>
+      <p class="measure" style="color:var(--ink);font-size:1.02rem">
+        Two months share an identical policy rate <em>and</em> an identical advertised
+        mortgage rate. Everything that differs between them is deposit pricing, so the
+        comparison isolates it without a model.
+      </p>
+      <div class="anchor-grid">
+        <div class="ac">
+          <div class="ac-d">November 2023</div>
+          <dl>
+            <dt>Cash rate target</dt><dd>4.35%</dd>
+            <dt>Standard variable mortgage</dt><dd>8.77%</dd>
+            <dt>Online saving account</dt><dd>2.55%</dd>
+          </dl>
+        </div>
+        <div class="ac">
+          <div class="ac-d">June 2026</div>
+          <dl>
+            <dt>Cash rate target</dt><dd>4.35%</dd>
+            <dt>Standard variable mortgage</dt><dd>8.77%</dd>
+            <dt>Online saving account</dt><dd class="diff">3.10%</dd>
+          </dl>
+        </div>
+      </div>
+      <p style="margin-top:1.2rem;font-size:.92rem;color:var(--muted)" class="measure">
+        At an identical policy setting and an identical advertised mortgage rate, savers
+        receive <span class="mark">0.55 percentage points more</span> than they did two and
+        a half years earlier. Because the policy rate is held fixed, the difference cannot
+        be attributed to the stance of policy.
+      </p>
+    </div>
+
+    <!-- ── FIGURE 1 ── -->
+    <figure class="figure rv" id="fig1">
+      <div class="fig-head">
+        <span class="fig-no">Figure 1</span>
+        <h3>The policy rate and the two sides of the balance sheet</h3>
+        <p class="fig-sub">
+          Cash rate target, advertised standard variable mortgage rate, and online saving
+          account rate. Monthly, January 2021 to June 2026. Per cent.
+        </p>
+      </div>
+      <div class="legend">
+        <span class="lg"><i class="dash"></i>Cash rate target <span style="color:var(--faint)">(reference)</span></span>
+        <span class="lg"><i style="background:var(--s-mortgage)"></i>Standard variable mortgage</span>
+        <span class="lg"><i style="background:var(--s-saver)"></i>Online saving account</span>
+      </div>
+      <div class="fig-body"><div id="c1"></div></div>
+      <figcaption class="fig-foot">
+        Shaded bands mark policy episodes. The cash rate is drawn as a step because the
+        target is piecewise constant between Board decisions. Sources: RBA tables F1, F4, F5.
+      </figcaption>
+      <details class="data">
+        <summary>Data table</summary>
+        <div class="scroll" id="t1"></div>
+      </details>
+    </figure>
+
+    <!-- ── TABLE 1 ── -->
+    <div class="tbl-wrap rv">
+      <table>
+        <caption><span class="cap-no">Table 1</span>Cumulative pass-through by episode, per cent of the cash rate change</caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Tightening<br>2022–23</th>
+            <th scope="col">Easing<br>2025</th>
+            <th scope="col">Tightening<br>2026 to date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cash rate, start to end</td><td>0.10 → 4.35</td><td>4.35 → 3.60</td><td>3.60 → 4.35</td></tr>
+          <tr><td>Change, percentage points</td><td>+4.25</td><td>−0.75</td><td>+0.75</td></tr>
+          <tr><td>Board moves</td><td>13</td><td>3</td><td>3</td></tr>
+          <tr><td>Standard variable mortgage</td><td>100.0</td><td>100.0</td><td>100.0</td></tr>
+          <tr class="hl"><td>Online saving account</td><td class="mark">55.3</td><td class="mark">40.0</td><td class="mark">106.7</td></tr>
+          <tr><td>One-year term deposit</td><td>101.2</td><td>33.3</td><td>153.3</td></tr>
+          <tr><td>Term deposit, average of all terms</td><td>81.2</td><td>60.0</td><td>93.3</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-note">
+        Base months are April 2022, January 2025 and January 2026. The mortgage result is a
+        property of the series, not a finding about conduct: the advertised standard variable
+        rate is a reference rate against which discounts are set, and it tracks the cash rate
+        by construction. The variation that matters on the lending side occurs in the
+        discount, which these tables do not report. Sources: RBA tables F1, F4, F5.
+      </p>
+    </div>
+
+    <!-- ── FIGURE 2 ── -->
+    <figure class="figure rv" id="fig2">
+      <div class="fig-head">
+        <span class="fig-no">Figure 2</span>
+        <h3>Deposit pass-through by product and episode</h3>
+        <p class="fig-sub">
+          Cumulative change in each deposit rate as a percentage of the cash rate change over
+          the same interval. The 100 per cent line is full pass-through.
+        </p>
+      </div>
+      <div class="legend">
+        <span class="lg"><i style="background:var(--s-saver)"></i>Online saving account</span>
+        <span class="lg"><i style="background:var(--s-td)"></i>One-year term deposit</span>
+        <span class="lg"><i style="background:var(--gold)"></i>Term deposit, all terms</span>
+      </div>
+      <div class="fig-body"><div id="c2"></div></div>
+      <figcaption class="fig-foot">
+        Ratios above 100 per cent computed over three moves and five months are not reliable
+        estimates of a long-run relationship. The direction of the 2026 change is well
+        supported; its magnitude is not yet pinned down.
+      </figcaption>
+    </figure>
+
+    <!-- ── level not lag ── -->
+    <h3 class="rv" style="font-size:1.3rem;margin-top:4rem;margin-bottom:1rem">The shortfall is a level, not a lag</h3>
+    <p class="rv measure" style="color:var(--muted);font-size:.95rem">
+      Incomplete deposit pass-through is often explained as slow adjustment that eventually
+      completes. The path through 2022–23 does not support that. The online saving rate
+      reached 56 per cent within six months and did not improve thereafter — at twelve months
+      it stood at 58.6 per cent, and by the end of the episode it had drifted back to 55.3.
+      The shortfall was established early and then persisted.
+    </p>
+
+    <div class="tbl-wrap rv">
+      <table>
+        <caption><span class="cap-no">Table 2</span>Cumulative pass-through at selected horizons, 2022–23 tightening</caption>
+        <thead>
+          <tr>
+            <th scope="col">Months after April 2022</th>
+            <th scope="col">Mortgage</th>
+            <th scope="col">Online saver</th>
+            <th scope="col">One-year term deposit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>3 &nbsp;<span style="color:var(--faint)">(Jul 2022)</span></td><td>100.0</td><td class="mark">44.0</td><td>96.0</td></tr>
+          <tr><td>6 &nbsp;<span style="color:var(--faint)">(Oct 2022)</span></td><td>100.0</td><td class="mark">56.0</td><td>124.0</td></tr>
+          <tr><td>12 <span style="color:var(--faint)">(Apr 2023)</span></td><td>100.0</td><td class="mark">58.6</td><td>108.6</td></tr>
+          <tr><td>19 <span style="color:var(--faint)">(Nov 2023)</span></td><td>100.0</td><td class="mark">55.3</td><td>101.2</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-note">
+        Depositors holding at-call savings and waiting for the remaining 45 per cent were
+        waiting for something that was not coming.
+      </p>
+    </div>
+
+    <!-- ── FIGURE 3 ── -->
+    <figure class="figure rv" id="fig3">
+      <div class="fig-head">
+        <span class="fig-no">Figure 3</span>
+        <h3>The wedge</h3>
+        <p class="fig-sub">
+          Advertised standard variable mortgage rate less the online saving account rate.
+          Monthly, percentage points.
+        </p>
+      </div>
+      <div class="fig-body"><div id="c3"></div></div>
+      <figcaption class="fig-foot">
+        The wedge stood at 4.32 points before the tightening began, widened by 1.90 points
+        across the episode, and peaked at 6.42 points in February 2024 — after the Board had
+        stopped moving. It now stands at 5.67. Of the 2.10 point widening to the peak, about
+        a quarter has been recovered after more than two years. A gap that opens during a
+        tightening does not close mechanically when the cycle reverses; it closes only when
+        deposit competition forces it.
+      </figcaption>
+      <details class="data">
+        <summary>Data table</summary>
+        <div class="scroll" id="t3"></div>
+      </details>
+    </figure>
+
+    <!-- ── methodology ── -->
+    <details class="method-vault rv">
+      <summary>Why the estimate is built this way</summary>
+      <div class="mgrid">
+      <div class="mcell">
+        <h3>Retail rates move on a coarse grid</h3>
+        <ul>
+          <li>The standard variable rate is unchanged in <b>71.4%</b> of months since January 2020; its smallest observed move is 0.10 pp.</li>
+          <li>Deposit series move in <b>5 basis point</b> increments. A 25 bp policy step onto a 5 bp grid means a single-move ratio can only take values in multiples of 20 per cent.</li>
+          <li>Per-move ratios are therefore lumpy <b>by construction</b>, independently of bank behaviour.</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>So the mean of per-move ratios is not the estimate</h3>
+        <ul>
+          <li>One-year term deposit, 13 moves in 2022–23: mean 103.1, median 70.0, <b>sd 148.1</b>, range 0 to 580.</li>
+          <li>The per-move ratio is a ratio of small differences; its variance rises as the denominator shrinks.</li>
+          <li>The episode-level estimate pools the denominator and is reported throughout. For the same series it gives <b>101.2</b>.</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>The policy-rate definition is not innocuous</h3>
+        <ul>
+          <li>The published record for 2022–23 is <b>13 increases totalling 425 bp</b>.</li>
+          <li>End-of-month cash rate target reproduces it exactly. The monthly average identifies <b>16</b> moves, inventing changes in months the Board did not meet.</li>
+          <li>End-of-month is used throughout. Sensitivity to the alternative is reported and never exceeds 1.4 pp.</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>What these tables cannot answer</h3>
+        <ul>
+          <li>F4 and F5 report <b>advertised</b> rates. The discount negotiated on a housing loan is not observed, so mortgage-side conclusions are conclusions about the reference rate.</li>
+          <li>Deposit pass-through varies by product; three series are reported because a single headline number would mislead.</li>
+          <li>Retail data end June 2026. Repricing in July or early August is not captured.</li>
+        </ul>
+      </div>
+      </div>
+    </details>
+
+    <div class="figure rv" style="margin-top:2.5rem">
+      <div class="fig-head">
+        <span class="fig-no">Reproducibility</span>
+        <h3>Inputs and code are hashed</h3>
+        <p class="fig-sub">Integrity fingerprints for the source data and analytical pipeline.</p>
+      </div>
+      <details class="research-details">
+        <summary>View SHA-256 fingerprints</summary>
+        <div class="repro">
+          <b>01_build_panel.py</b> &nbsp;8,253 B &nbsp;&nbsp;1b449b14c0d83d5946b24ae83426cbb1…<br>
+          <b>02_charts.py</b> &nbsp;11,508 B &nbsp;&nbsp;10c824497179f562655e9c1b9c6e3cdc…<br>
+          <b>03_report_stats.py</b> &nbsp;5,322 B &nbsp;&nbsp;1e8eac34d27270691ac5fa40080abb4e…<br>
+          <b>04_method_diagnostics.py</b> &nbsp;6,238 B &nbsp;&nbsp;d338ee33f7ff9a7694e369f94eaa6970…<br>
+          <b>f01d.xlsx</b> &nbsp;403,205 B &nbsp;&nbsp;66653d340879c99f729cc992945c9f21…<br>
+          <b>f01hist.xlsx</b> &nbsp;467,367 B &nbsp;&nbsp;14dc5883f1e39d91e8c28743534fc2c9…<br>
+          <b>f04hist.xlsx</b> &nbsp;458,766 B &nbsp;&nbsp;998b137b9cd371e770b1f54fcce66b90…<br>
+          <b>f05hist.xlsx</b> &nbsp;854,505 B &nbsp;&nbsp;b7964af326d3e2e8932bd1a8b1f60edf…
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ EVIDENCE ═════════════════════════ -->
+<section class="band" id="evidence">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">03</span>
+      <h2>Evidence base</h2>
+    </div>
+    <p class="lede rv" style="margin-bottom:2.5rem">
+      The same transmission question, estimated at scale. Where the Australian work observes
+      pass-through in published retail series, this establishes it econometrically across
+      banks and countries — and identifies what attenuates it.
+    </p>
+
+    <div class="rv">
+      <article class="entry">
+        <div class="entry-meta">2026 · Published</div>
+        <div>
+          <h3><a href="https://doi.org/10.1186/s43093-026-00799-5" target="_blank" rel="noopener">Global economic policy uncertainty and credit risk in emerging economies: evidence from Bangladesh</a></h3>
+          <div class="venue">Future Business Journal 12, Article 99 · Springer Nature · Open access</div>
+          <p>
+            Estimates the response of commercial bank non-performing loan ratios to global
+            economic policy uncertainty, 2000–2021, and identifies the conditions under which
+            the effect is muted.
+          </p>
+          <ul class="findings">
+            <li>A one standard deviation increase in GEPU is associated with a rise of roughly <span class="mark">9 per cent</span> in the average NPL ratio</li>
+            <li>Fiscal capacity and bank balance-sheet strength operate as attenuation mechanisms</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-meta">2026 · Submitted<br>Under examination</div>
+        <div>
+          <h3>Economic policy uncertainty, bank credit risk, and funding costs</h3>
+          <div class="venue">MPhil thesis · Western Sydney University</div>
+          <p>
+            Cross-country panel evidence on both sides of the balance sheet simultaneously:
+            <strong style="color:var(--ink-2)">31 to 37 countries, 768 to 4,847 banks, 2000–2024</strong>.
+            Fixed effects with Driscoll–Kraay standard errors, System GMM, instrumental
+            variable estimation using V-Dem political polarisation, and quantile regression.
+          </p>
+          <ul class="findings">
+            <li>Uncertainty raises non-performing loan ratios and <em>reduces</em> the cost of deposit funding</li>
+            <li>Consistent with safe-haven demand for bank liabilities under uncertainty — asset quality and funding move in opposite directions</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-meta">Refereed</div>
+        <div>
+          <h3>Effects of non-performing loans on economic growth and profitability of banks in Bangladesh</h3>
+          <div class="venue">Bank Parikrama, 66 · Bangladesh Institute of Bank Management</div>
+          <p>With H. Islam, R. Taskin and M. M. Rashid.</p>
+        </div>
+      </article>
+    </div>
+
+    <details class="paper-vault rv">
+      <summary>Browse seven working papers <span style="color:var(--faint);font-weight:400;font-family:var(--f-mono);font-size:.7rem">SSRN · Elsevier Research Network</span></summary>
+      <ul class="wp-list">
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5391713" target="_blank" rel="noopener">Economic policy uncertainty and bank credit risk: a comprehensive review</a><span class="src">SSRN 5391713</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5435338" target="_blank" rel="noopener">A review of credit channel responses to economic policy uncertainty</a><span class="src">SSRN 5435338</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5403498" target="_blank" rel="noopener">Crises relearned: uncertainty, credit tightening, and default dynamics from the GFC to COVID-19</a><span class="src">SSRN 5403498</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5593250" target="_blank" rel="noopener">Macroeconomic and institutional determinants of non-performing loans: a conceptual and global review</a><span class="src">SSRN 5593250</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5543282" target="_blank" rel="noopener">Policy uncertainty and non-performing loans: a structural analysis of Bangladesh, 2000–2023</a><span class="src">SSRN 5543282</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5665011" target="_blank" rel="noopener">Global policy uncertainty and credit risk transmission in Bangladesh: time-series evidence, 2000–2021</a><span class="src">SSRN 5665011</span></li>
+        <li class="wp"><span class="y">2025</span><a href="https://papers.ssrn.com/abstract=5617990" target="_blank" rel="noopener">Economic policy uncertainty and non-performing loans in Bangladesh: hidden risk under stability</a><span class="src">SSRN 5617990</span></li>
+      </ul>
+    </details>
+
+    <p class="rv" style="margin-top:2rem;font-size:.85rem;color:var(--faint)">
+      Two manuscripts in preparation: bank funding costs under uncertainty (cross-country
+      panel), and EPU transmission to credit risk, 2000–2024.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ METHOD ═══════════════════════════ -->
+<section class="band" id="method">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">04</span>
+      <h2>Method &amp; data</h2>
+    </div>
+
+    <div class="mgrid rv">
+      <div class="mcell">
+        <h3>Estimation</h3>
+        <ul>
+          <li>Panel fixed and random effects with <b>Driscoll–Kraay</b> standard errors for cross-sectional dependence</li>
+          <li>Dynamic panels — <b>System GMM</b> (Arellano–Bond, Blundell–Bover) with instrument-count discipline</li>
+          <li><b>Instrumental variables</b> — two-stage least squares, weak-instrument diagnostics</li>
+          <li><b>Quantile regression</b> for effects away from the conditional mean</li>
+          <li>Pesaran CD testing, panel unit root testing, episode-level ratio estimation</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>Data</h3>
+        <ul>
+          <li><b>RBA statistical tables</b> — F1 money market, F4 advertised deposit rates, F5 indicator lending rates</li>
+          <li><b>BankFocus (Orbis)</b> bank-level balance sheet and income statement data</li>
+          <li><b>Refinitiv Eikon</b>; World Bank WDI; IMF Financial Soundness Indicators</li>
+          <li><b>GEPU</b> — Baker, Bloom and Davis policy uncertainty index; <b>V-Dem</b> political indicators</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>Tooling</h3>
+        <ul>
+          <li><b>Stata</b> — panel estimation, GMM, IV, dataset construction, esttab output</li>
+          <li><b>Python</b> — pandas, wbgapi, API-based assembly, chart and report pipelines</li>
+          <li><b>Excel</b> (advanced) — financial modelling and data cleaning</li>
+          <li>Zotero; Canvas, Moodle, Blackboard</li>
+        </ul>
+      </div>
+      <div class="mcell">
+        <h3>Standards</h3>
+        <ul>
+          <li>Every figure traces to a published series with a stated table and release date</li>
+          <li>No interpolation of missing observations — gaps are left as gaps</li>
+          <li>Sensitivity to definitional choices reported, not buried</li>
+          <li>Inputs and code hashed so results are reproducible from source</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TEACHING ═════════════════════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">05</span>
+      <h2>Teaching</h2>
+    </div>
+    <p class="lede rv" style="margin-bottom:2rem">
+      Roughly four years of tertiary teaching in economics and finance, across Australian
+      and Bangladeshi institutions.
+    </p>
+    <div class="rv">
+      <article class="entry">
+        <div class="entry-meta">2024 – present</div>
+        <div>
+          <h3>Sessional Lecturer &amp; Academic Marker — Economics</h3>
+          <div class="venue">Churchill Institute of Higher Education, Sydney</div>
+          <p>
+            Principles of Economics (micro and macro), Foundation of Management, Leadership,
+            Business Research, Hospitality Project Management. Workshop and tutorial delivery,
+            rubric-based assessment design, marking and moderation.
+          </p>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="entry-meta">2024 – present</div>
+        <div>
+          <h3>Academic Marker — School of Business</h3>
+          <div class="venue">Western Sydney University</div>
+          <p>Large-cohort marking and moderation across economics and management units; grading consistency and academic integrity compliance.</p>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="entry-meta">2022 – 2024</div>
+        <div>
+          <h3>Lecturer — Finance &amp; Banking</h3>
+          <div class="venue">Tertiary institution, Bangladesh</div>
+          <p>Finance, banking and financial institutions to undergraduate cohorts; course material and assessment development.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACT ══════════════════════════ -->
+<section class="band" id="contact">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="sec-no">06</span>
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-grid rv">
+      <div>
+        <p class="lede">
+          Available for applied economics, policy analysis, and quantitative research work —
+          and for conversations about doctoral supervision in monetary transmission or
+          banking stability.
+        </p>
+        <p style="margin-top:1.2rem;font-size:.9rem;color:var(--muted)">
+          Based in Sydney. Australian student visa with unlimited work rights as an HDR
+          candidate.
+        </p>
+      </div>
+      <ul class="clist">
+        <li><span class="k">University</span><a href="mailto:I.Angela@westernsydney.edu.au">I.Angela@westernsydney.edu.au</a></li>
+        <li><span class="k">Direct</span><a href="mailto:eirenetahjiba@gmail.com">eirenetahjiba@gmail.com</a></li>
+        <li><span class="k">Published work</span><a href="https://doi.org/10.1186/s43093-026-00799-5" target="_blank" rel="noopener">doi.org/10.1186/s43093-026-00799-5</a></li>
+        <li><span class="k">Location</span><span class="v">Sydney, NSW, Australia</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Irine Tahjiba Angela</span>
+    <span>Figures computed from published RBA statistical tables F1, F4 and F5.</span>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   DATA — monthly, from the project panel (RBA F1/F4/F5)
+   [ month, cash_eom, mortgage, saver, td1y, tdavg ]
+   ══════════════════════════════════════════════════════════════ */
+const RATES=[["2021-01",0.1,4.52,0.2,0.3,0.25],["2021-02",0.1,4.52,0.2,0.3,0.2],["2021-03",0.1,4.52,0.2,0.3,0.2],["2021-04",0.1,4.52,0.15,0.3,0.2],["2021-05",0.1,4.52,0.2,0.3,0.2],["2021-06",0.1,4.52,0.2,0.25,0.15],["2021-07",0.1,4.52,0.2,0.25,0.15],["2021-08",0.1,4.52,0.2,0.25,0.15],["2021-09",0.1,4.52,0.2,0.25,0.15],["2021-10",0.1,4.52,0.2,0.25,0.15],["2021-11",0.1,4.52,0.2,0.25,0.15],["2021-12",0.1,4.52,0.2,0.25,0.15],["2022-01",0.1,4.52,0.2,0.25,0.15],["2022-02",0.1,4.52,0.2,0.25,0.15],["2022-03",0.1,4.52,0.2,0.25,0.15],["2022-04",0.1,4.52,0.2,0.25,0.15],["2022-05",0.35,4.77,0.3,0.4,0.3],["2022-06",0.85,5.27,0.5,0.8,0.45],["2022-07",1.35,5.77,0.75,1.45,1.0],["2022-08",1.85,6.27,1.15,1.55,1.0],["2022-09",2.35,6.77,1.45,1.9,1.3],["2022-10",2.6,7.02,1.6,3.35,2.4],["2022-11",2.85,7.27,1.7,3.65,2.55],["2022-12",3.1,7.52,1.9,3.65,2.55],["2023-01",3.1,7.52,1.9,3.7,2.6],["2023-02",3.35,7.77,2.05,3.9,2.75],["2023-03",3.6,8.02,2.25,4.05,3.1],["2023-04",3.6,8.02,2.25,4.05,3.1],["2023-05",3.85,8.27,2.35,4.1,3.3],["2023-06",4.1,8.52,2.5,4.3,3.4],["2023-07",4.1,8.52,2.5,4.5,3.6],["2023-08",4.1,8.52,2.5,4.5,3.6],["2023-09",4.1,8.52,2.5,4.5,3.6],["2023-10",4.1,8.52,2.5,4.45,3.6],["2023-11",4.35,8.77,2.55,4.55,3.6],["2023-12",4.35,8.77,2.55,4.55,3.6],["2024-01",4.35,8.77,2.55,4.55,3.6],["2024-02",4.35,8.77,2.35,4.45,3.6],["2024-03",4.35,8.77,2.35,4.45,3.55],["2024-04",4.35,8.77,2.65,4.45,3.55],["2024-05",4.35,8.77,2.65,4.5,3.55],["2024-06",4.35,8.77,2.65,4.5,3.55],["2024-07",4.35,8.77,2.65,4.5,3.55],["2024-08",4.35,8.77,2.65,4.3,3.5],["2024-09",4.35,8.77,2.6,4.25,3.4],["2024-10",4.35,8.77,2.6,4.2,3.35],["2024-11",4.35,8.77,2.6,4.2,3.35],["2024-12",4.35,8.77,2.6,4.2,3.35],["2025-01",4.35,8.77,2.6,4.15,3.35],["2025-02",4.1,8.62,2.75,4.1,3.25],["2025-03",4.1,8.52,2.65,4.0,3.2],["2025-04",4.1,8.52,2.65,3.9,3.1],["2025-05",3.85,8.37,2.45,3.8,3.0],["2025-06",3.85,8.27,2.45,3.7,2.95],["2025-07",3.85,8.27,2.45,3.6,2.85],["2025-08",3.6,8.02,2.3,3.6,2.85],["2025-09",3.6,8.02,2.3,3.6,2.85],["2025-10",3.6,8.02,2.3,3.6,2.85],["2025-11",3.6,8.02,2.3,3.7,2.85],["2025-12",3.6,8.02,2.3,3.75,2.9],["2026-01",3.6,8.02,2.3,3.9,2.9],["2026-02",3.85,8.27,2.5,3.95,3.0],["2026-03",4.1,8.52,2.7,4.5,3.25],["2026-04",4.1,8.52,2.7,5.0,3.55],["2026-05",4.35,8.77,3.05,5.05,3.55],["2026-06",4.35,8.77,3.1,5.05,3.6],["2026-07",4.35,null,null,null,null],["2026-08",4.35,null,null,null,null]];
+
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmtM=(ym)=>{const[y,m]=ym.split("-");return MON[+m-1]+" "+y};
+const idxOf=(ym)=>RATES.findIndex(r=>r[0]===ym);
+const CSS=(n)=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ══════════════════════ SVG CHART HELPERS ═══════════════════ */
+const SVGNS="http://www.w3.org/2000/svg";
+function el(t,a={}){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e}
+
+/* Below 760px the stylesheet steps chart type up in user units so it stays
+   legible once the viewBox is scaled down. Every vertical offset and bottom
+   margin below is expressed in those same units, so they have to move with
+   it — otherwise labels collide at mobile. S is that factor. */
+const MQ=matchMedia("(max-width:760px)");
+const S=()=>MQ.matches?1.4:1;
+
+function makeTip(host){
+  const d=document.createElement("div");d.className="tip";host.style.position="relative";host.appendChild(d);return d;
+}
+
+/* ── FIGURE 1 : lines + stepped reference ───────────────────── */
+function chart1(){
+  const host=document.getElementById("c1");host.textContent="";
+  const k=S();
+  const W=920,H=430+(k-1)*26,L=46,R=132,T=22,B=42+(k-1)*26;
+  const iw=W-L-R, ih=H-T-B;
+  const n=RATES.length;
+  const yMax=9.6;
+  const x=i=>L+(i/(n-1))*iw;
+  const y=v=>T+ih-(v/yMax)*ih;
+
+  const svg=el("svg",{class:"chart",viewBox:`0 0 ${W} ${H}`,role:"img",
+    "aria-label":"Cash rate target, standard variable mortgage rate and online saving rate, January 2021 to June 2026."});
+
+  /* episode bands */
+  const bands=[["2022-05","2023-11","2022–23 tightening"],["2025-02","2025-08","2025 easing"],["2026-02","2026-05","2026"]];
+  bands.forEach(([a,b,lab])=>{
+    const x0=x(idxOf(a)),x1=x(idxOf(b));
+    svg.appendChild(el("rect",{class:"band",x:x0,y:T,width:Math.max(1,x1-x0),height:ih}));
+    const t=el("text",{class:"bandlab",x:(x0+x1)/2,y:T-7*k,"text-anchor":"middle"});t.textContent=lab;svg.appendChild(t);
+  });
+
+  /* gridlines */
+  for(let v=0;v<=9;v+=3){
+    svg.appendChild(el("line",{class:v===0?"zero":"grid",x1:L,x2:L+iw,y1:y(v),y2:y(v)}));
+    const t=el("text",{x:L-9,y:y(v)+3.5,"text-anchor":"end"});t.textContent=v.toFixed(0);svg.appendChild(t);
+  }
+  const yl=el("text",{class:"axlab",x:L-9,y:T-8,"text-anchor":"end"});yl.textContent="%";svg.appendChild(yl);
+
+  /* x ticks — January of each year */
+  RATES.forEach((r,i)=>{
+    if(!r[0].endsWith("-01"))return;
+    const t=el("text",{x:x(i),y:T+ih+22*k,"text-anchor":"middle"});t.textContent=r[0].slice(0,4);svg.appendChild(t);
+  });
+
+  /* stepped cash rate */
+  let sp="";
+  RATES.forEach((r,i)=>{
+    if(r[1]==null)return;
+    if(sp===""){sp=`M${x(i)},${y(r[1])}`}
+    else{sp+=` L${x(i)},${y(RATES[i-1][1])} L${x(i)},${y(r[1])}`}
+  });
+  svg.appendChild(el("path",{d:sp,fill:"none",stroke:CSS("--s-ref"),"stroke-width":1.6,
+    "stroke-dasharray":"4 3","stroke-linejoin":"round",opacity:".85"}));
+
+  /* retail series */
+  const series=[
+    {k:2,c:CSS("--s-mortgage"),lab:"Standard variable\nmortgage"},
+    {k:3,c:CSS("--s-saver"),lab:"Online saving\naccount"}
+  ];
+  series.forEach(s=>{
+    let d="";
+    RATES.forEach((r,i)=>{const v=r[s.k];if(v==null)return;d+=(d===""?"M":"L")+x(i)+","+y(v)});
+    svg.appendChild(el("path",{d,fill:"none",stroke:s.c,"stroke-width":2,
+      "stroke-linejoin":"round","stroke-linecap":"round"}));
+  });
+
+  /* direct labels at the last observed retail month */
+  let last=RATES.length-1; while(last>0&&RATES[last][2]==null)last--;
+  series.forEach(s=>{
+    const v=RATES[last][s.k];
+    const lines=s.lab.split("\n");
+    lines.forEach((ln,j)=>{
+      const t=el("text",{class:"dlab",x:x(last)+12,y:y(v)+3+(j-(lines.length-1)/2)*15*k,fill:s.c});
+      t.textContent=ln;svg.appendChild(t);
+    });
+  });
+  {
+    const t=el("text",{class:"dlab",x:x(RATES.length-1)+10,y:y(4.35)+4,fill:CSS("--s-ref")});
+    t.textContent="Cash rate";svg.appendChild(t);
+  }
+
+  /* the two anchor months — same cash rate, same mortgage rate, different deposit rate.
+     Jun 2026 sits under the right-hand direct labels, so its caption is set below
+     and to the left of the marker to keep clear of them. */
+  [["2023-11","Nov 2023","middle",0,-11*k],["2026-06","Jun 2026","end",-7,17*k]].forEach(([ym,lab,anch,dx,dy])=>{
+    const i=idxOf(ym);
+    svg.appendChild(el("line",{x1:x(i),x2:x(i),y1:y(RATES[i][3])-4,y2:y(RATES[i][2])+4,
+      stroke:CSS("--rose"),"stroke-width":1,"stroke-dasharray":"2 2",opacity:".7"}));
+    [2,3].forEach(k=>svg.appendChild(el("circle",{cx:x(i),cy:y(RATES[i][k]),r:3.2,
+      fill:CSS("--bg"),stroke:CSS("--rose"),"stroke-width":1.6})));
+    const t=el("text",{class:"dlab",x:x(i)+dx,y:y(RATES[i][3])+dy,"text-anchor":anch,fill:CSS("--rose")});
+    t.textContent=lab;svg.appendChild(t);
+  });
+
+  /* hover layer */
+  const cross=el("line",{x1:0,x2:0,y1:T,y2:T+ih,stroke:CSS("--rose"),"stroke-width":1,opacity:"0"});
+  svg.appendChild(cross);
+  const dots=[2,3].map(()=>{const c=el("circle",{r:4,fill:CSS("--bg"),stroke:CSS("--rose"),"stroke-width":2,opacity:"0"});svg.appendChild(c);return c});
+  const hit=el("rect",{x:L,y:T,width:iw,height:ih,fill:"transparent",style:"cursor:crosshair"});
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip=makeTip(host);
+
+  function move(ev){
+    const box=svg.getBoundingClientRect();
+    const px=(ev.touches?ev.touches[0].clientX:ev.clientX)-box.left;
+    const rel=(px/box.width)*W;
+    let i=Math.round(((rel-L)/iw)*(n-1));
+    i=Math.max(0,Math.min(n-1,i));
+    const r=RATES[i];
+    cross.setAttribute("x1",x(i));cross.setAttribute("x2",x(i));cross.setAttribute("opacity",".45");
+    [2,3].forEach((k,j)=>{
+      if(r[k]==null){dots[j].setAttribute("opacity","0");return}
+      dots[j].setAttribute("cx",x(i));dots[j].setAttribute("cy",y(r[k]));
+      dots[j].setAttribute("stroke",j===0?CSS("--s-mortgage"):CSS("--s-saver"));
+      dots[j].setAttribute("opacity","1");
+    });
+    let rows=`<div class="tip-r"><i style="background:${CSS("--s-ref")}"></i>Cash rate<b>${r[1]!=null?r[1].toFixed(2):"—"}</b></div>`;
+    rows+=`<div class="tip-r"><i style="background:${CSS("--s-mortgage")}"></i>Mortgage<b>${r[2]!=null?r[2].toFixed(2):"—"}</b></div>`;
+    rows+=`<div class="tip-r"><i style="background:${CSS("--s-saver")}"></i>Online saver<b>${r[3]!=null?r[3].toFixed(2):"—"}</b></div>`;
+    tip.innerHTML=`<div class="tip-d">${fmtM(r[0])}</div>${rows}`;
+    tip.classList.add("on");
+    tip.style.left=(x(i)/W*box.width)+"px";
+    tip.style.top=((r[2]!=null?y(r[2]):y(6))/H*box.height)+"px";
+  }
+  function leave(){cross.setAttribute("opacity","0");dots.forEach(d=>d.setAttribute("opacity","0"));tip.classList.remove("on")}
+  hit.addEventListener("mousemove",move);
+  hit.addEventListener("mouseleave",leave);
+  hit.addEventListener("touchmove",e=>{move(e)},{passive:true});
+  hit.addEventListener("touchend",leave);
+}
+
+/* ── FIGURE 2 : grouped bars ────────────────────────────────── */
+function chart2(){
+  const host=document.getElementById("c2");host.textContent="";
+  const k=S();
+  const W=920,H=380+(k-1)*40,L=52,R=24,T=26,B=64+(k-1)*40;
+  const iw=W-L-R, ih=H-T-B;
+  const groups=[
+    {lab:"Tightening 2022–23",sub:"+4.25 pp · 13 moves",v:[55.3,101.2,81.2]},
+    {lab:"Easing 2025",sub:"−0.75 pp · 3 moves",v:[40.0,33.3,60.0]},
+    {lab:"Tightening 2026",sub:"+0.75 pp · 3 moves",v:[106.7,153.3,93.3]}
+  ];
+  const cols=[CSS("--s-saver"),CSS("--s-td"),CSS("--gold")];
+  const names=["Online saving account","One-year term deposit","Term deposit, all terms"];
+  const yMax=170;
+  const y=v=>T+ih-(v/yMax)*ih;
+
+  const svg=el("svg",{class:"chart",viewBox:`0 0 ${W} ${H}`,role:"img",
+    "aria-label":"Deposit pass-through by product across three policy episodes, per cent of the cash rate change."});
+
+  for(let v=0;v<=150;v+=50){
+    svg.appendChild(el("line",{class:v===0?"zero":"grid",x1:L,x2:L+iw,y1:y(v),y2:y(v)}));
+    const t=el("text",{x:L-9,y:y(v)+3.5,"text-anchor":"end"});t.textContent=v;svg.appendChild(t);
+  }
+  const yl=el("text",{class:"axlab",x:L-9,y:T-8,"text-anchor":"end"});yl.textContent="%";svg.appendChild(yl);
+
+  /* full pass-through reference */
+  svg.appendChild(el("line",{x1:L,x2:L+iw,y1:y(100),y2:y(100),stroke:CSS("--rose"),
+    "stroke-width":1.2,"stroke-dasharray":"5 4",opacity:".75"}));
+  /* below the line at the left margin — above it collides with the 101.2 bar
+     value, and at the right end with the 2026 values */
+  const rl=el("text",{x:L+4,y:y(100)+14*k,"text-anchor":"start",fill:CSS("--rose")});
+  rl.textContent="full pass-through";svg.appendChild(rl);
+
+  const gw=iw/groups.length, bw=Math.min(46,(gw-46)/3), gap=2;
+  groups.forEach((g,gi)=>{
+    const gx=L+gi*gw+(gw-(bw*3+gap*2))/2;
+    g.v.forEach((v,bi)=>{
+      const bx=gx+bi*(bw+gap), by=y(v), bh=T+ih-by, r=Math.min(4,bw/2);
+      const d=`M${bx},${T+ih} L${bx},${by+r} Q${bx},${by} ${bx+r},${by} L${bx+bw-r},${by} Q${bx+bw},${by} ${bx+bw},${by+r} L${bx+bw},${T+ih} Z`;
+      const p=el("path",{d,fill:cols[bi],opacity:".92",style:"cursor:pointer"});
+      p.addEventListener("mouseenter",()=>{p.setAttribute("opacity","1");
+        tip.innerHTML=`<div class="tip-d">${g.lab}</div><div class="tip-r"><i style="background:${cols[bi]}"></i>${names[bi]}<b>${v.toFixed(1)}%</b></div>`;
+        tip.classList.add("on");
+        const box=svg.getBoundingClientRect();
+        tip.style.left=((bx+bw/2)/W*box.width)+"px";tip.style.top=(by/H*box.height)+"px";
+      });
+      p.addEventListener("mouseleave",()=>{p.setAttribute("opacity",".92");tip.classList.remove("on")});
+      svg.appendChild(p);
+      const t=el("text",{class:"dlab",x:bx+bw/2,y:by-8*k,"text-anchor":"middle",fill:cols[bi]});
+      t.textContent=v.toFixed(1);svg.appendChild(t);
+    });
+    const t1y=T+ih+22*k;
+    const t1=el("text",{class:"axlab",x:L+gi*gw+gw/2,y:t1y,"text-anchor":"middle"});
+    t1.textContent=g.lab;svg.appendChild(t1);
+    const t2=el("text",{x:L+gi*gw+gw/2,y:t1y+17*k,"text-anchor":"middle"});
+    t2.textContent=g.sub;svg.appendChild(t2);
+    if(gi>0)svg.appendChild(el("line",{x1:L+gi*gw,x2:L+gi*gw,y1:T,y2:T+ih+8,stroke:CSS("--rule"),"stroke-width":1}));
+  });
+
+  host.appendChild(svg);
+  const tip=makeTip(host);
+}
+
+/* ── FIGURE 3 : the wedge ───────────────────────────────────── */
+function chart3(){
+  const host=document.getElementById("c3");host.textContent="";
+  const k=S();
+  const W=920,H=340+(k-1)*26,L=46,R=100,T=26,B=42+(k-1)*26;
+  const iw=W-L-R, ih=H-T-B;
+  const pts=RATES.map((r,i)=>({i,ym:r[0],v:(r[2]!=null&&r[3]!=null)?+(r[2]-r[3]).toFixed(2):null}))
+                 .filter(p=>p.v!=null);
+  const n=RATES.length;
+  const yMin=4.0,yMax=6.8;
+  const x=i=>L+(i/(n-1))*iw;
+  const y=v=>T+ih-((v-yMin)/(yMax-yMin))*ih;
+
+  const svg=el("svg",{class:"chart",viewBox:`0 0 ${W} ${H}`,role:"img",
+    "aria-label":"Advertised standard variable mortgage rate less online saving rate, monthly, percentage points."});
+
+  const grad=el("linearGradient",{id:"wg",x1:"0",y1:"0",x2:"0",y2:"1"});
+  grad.appendChild(el("stop",{offset:"0%","stop-color":CSS("--s-mortgage"),"stop-opacity":".34"}));
+  grad.appendChild(el("stop",{offset:"100%","stop-color":CSS("--s-mortgage"),"stop-opacity":"0"}));
+  const defs=el("defs");defs.appendChild(grad);svg.appendChild(defs);
+
+  for(let v=4;v<=6.5;v+=0.5){
+    svg.appendChild(el("line",{class:"grid",x1:L,x2:L+iw,y1:y(v),y2:y(v)}));
+    const t=el("text",{x:L-9,y:y(v)+3.5,"text-anchor":"end"});t.textContent=v.toFixed(1);svg.appendChild(t);
+  }
+  const yl=el("text",{class:"axlab",x:L-9,y:T-8,"text-anchor":"end"});yl.textContent="pp";svg.appendChild(yl);
+  RATES.forEach((r,i)=>{
+    if(!r[0].endsWith("-01"))return;
+    const t=el("text",{x:x(i),y:T+ih+22*k,"text-anchor":"middle"});t.textContent=r[0].slice(0,4);svg.appendChild(t);
+  });
+
+  let line="",area="";
+  pts.forEach((p,j)=>{line+=(j===0?"M":"L")+x(p.i)+","+y(p.v)});
+  area=line+` L${x(pts[pts.length-1].i)},${T+ih} L${x(pts[0].i)},${T+ih} Z`;
+  svg.appendChild(el("path",{d:area,fill:"url(#wg)"}));
+  svg.appendChild(el("path",{d:line,fill:"none",stroke:CSS("--s-mortgage"),"stroke-width":2,"stroke-linejoin":"round"}));
+
+  /* annotations */
+  const marks=[["2022-04","4.32","before the cycle",-1],["2024-02","6.42","peak",-1],["2026-06","5.67","latest",-1]];
+  marks.forEach(([ym,val,lab,dir])=>{
+    const i=idxOf(ym), p=pts.find(q=>q.i===i);if(!p)return;
+    const anch=ym==="2026-06"?"end":"middle";
+    svg.appendChild(el("circle",{cx:x(i),cy:y(p.v),r:3.6,fill:CSS("--bg"),stroke:CSS("--s-mortgage"),"stroke-width":2}));
+    /* value sits above the marker, its caption above that — both scaled */
+    const t=el("text",{class:"dlab",x:x(i),y:y(p.v)+dir*24*k,"text-anchor":anch,fill:CSS("--ink")});
+    t.textContent=val;svg.appendChild(t);
+    const s=el("text",{x:x(i),y:y(p.v)+dir*24*k-14*k,"text-anchor":anch});
+    s.textContent=lab;svg.appendChild(s);
+  });
+
+  /* hover */
+  const cross=el("line",{y1:T,y2:T+ih,stroke:CSS("--rose"),"stroke-width":1,opacity:"0"});svg.appendChild(cross);
+  const dot=el("circle",{r:4,fill:CSS("--bg"),stroke:CSS("--s-mortgage"),"stroke-width":2,opacity:"0"});svg.appendChild(dot);
+  const hit=el("rect",{x:L,y:T,width:iw,height:ih,fill:"transparent",style:"cursor:crosshair"});svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip=makeTip(host);
+
+  function move(ev){
+    const box=svg.getBoundingClientRect();
+    const px=(ev.touches?ev.touches[0].clientX:ev.clientX)-box.left;
+    const rel=(px/box.width)*W;
+    let i=Math.round(((rel-L)/iw)*(n-1));
+    const p=pts.reduce((a,b)=>Math.abs(b.i-i)<Math.abs(a.i-i)?b:a);
+    cross.setAttribute("x1",x(p.i));cross.setAttribute("x2",x(p.i));cross.setAttribute("opacity",".45");
+    dot.setAttribute("cx",x(p.i));dot.setAttribute("cy",y(p.v));dot.setAttribute("opacity","1");
+    tip.innerHTML=`<div class="tip-d">${fmtM(p.ym)}</div><div class="tip-r"><i style="background:${CSS("--s-mortgage")}"></i>Wedge<b>${p.v.toFixed(2)} pp</b></div>`;
+    tip.classList.add("on");
+    tip.style.left=(x(p.i)/W*box.width)+"px";tip.style.top=(y(p.v)/H*box.height)+"px";
+  }
+  function leave(){cross.setAttribute("opacity","0");dot.setAttribute("opacity","0");tip.classList.remove("on")}
+  hit.addEventListener("mousemove",move);
+  hit.addEventListener("mouseleave",leave);
+  hit.addEventListener("touchmove",e=>{move(e)},{passive:true});
+  hit.addEventListener("touchend",leave);
+}
+
+/* ── data tables (accessibility / table view) ───────────────── */
+function tables(){
+  const rows=RATES.filter(r=>r[2]!=null);
+  let h='<table><thead><tr><th>Month</th><th>Cash rate</th><th>Mortgage</th><th>Online saver</th><th>1-yr TD</th><th>TD, all terms</th></tr></thead><tbody>';
+  rows.forEach(r=>{h+=`<tr><td>${fmtM(r[0])}</td><td>${r[1].toFixed(2)}</td><td>${r[2].toFixed(2)}</td><td>${r[3].toFixed(2)}</td><td>${r[4].toFixed(2)}</td><td>${r[5].toFixed(2)}</td></tr>`});
+  document.getElementById("t1").innerHTML=h+"</tbody></table>";
+
+  let w='<table><thead><tr><th>Month</th><th>Mortgage</th><th>Online saver</th><th>Wedge, pp</th></tr></thead><tbody>';
+  rows.forEach(r=>{w+=`<tr><td>${fmtM(r[0])}</td><td>${r[2].toFixed(2)}</td><td>${r[3].toFixed(2)}</td><td>${(r[2]-r[3]).toFixed(2)}</td></tr>`});
+  document.getElementById("t3").innerHTML=w+"</tbody></table>";
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO — transmission network (raw WebGL, no dependencies)
+
+   Nodes are institutions in a flattened cloud; edges are exposures.
+   A shock enters at a fixed origin above the cloud and propagates
+   outward as a spherical wavefront. Nodes flare rose as the front
+   passes and decay back to a cool base — policy arriving, unevenly,
+   at different parts of the system.
+   ══════════════════════════════════════════════════════════════ */
+(function hero(){
+  const cv=document.getElementById("gl");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let gl;
+  try{gl=cv.getContext("webgl",{antialias:true,alpha:true,powerPreference:"low-power"})}catch(e){}
+  if(!gl){
+    cv.style.background="radial-gradient(ellipse 70% 60% at 68% 42%, rgba(224,162,168,.10), rgba(10,13,22,0) 62%)";
+    return;
+  }
+
+  /* ── geometry ── */
+  const N=640;
+  const pos=new Float32Array(N*3), seed=new Float32Array(N);
+  for(let i=0;i<N;i++){
+    const u=Math.random()*2-1, th=Math.random()*Math.PI*2, s=Math.sqrt(1-u*u);
+    const r=Math.pow(Math.random(),.62);
+    pos[i*3]  = s*Math.cos(th)*r*3.05;
+    pos[i*3+1]= u*r*1.42;
+    pos[i*3+2]= s*Math.sin(th)*r*3.05;
+    seed[i]=Math.random();
+  }
+  /* nearest-neighbour edges */
+  const E=[];
+  for(let i=0;i<N;i++){
+    let b1=-1,b2=-1,d1=1e9,d2=1e9;
+    for(let j=0;j<N;j++){
+      if(i===j)continue;
+      const dx=pos[i*3]-pos[j*3],dy=pos[i*3+1]-pos[j*3+1],dz=pos[i*3+2]-pos[j*3+2];
+      const d=dx*dx+dy*dy+dz*dz;
+      if(d<d1){d2=d1;b2=b1;d1=d;b1=j}else if(d<d2){d2=d;b2=j}
+    }
+    if(b1>i)E.push(i,b1);
+    if(b2>i)E.push(i,b2);
+  }
+  const eCount=E.length;
+  const ePos=new Float32Array(eCount*3), eSeed=new Float32Array(eCount);
+  for(let k=0;k<eCount;k++){
+    const v=E[k];
+    ePos[k*3]=pos[v*3];ePos[k*3+1]=pos[v*3+1];ePos[k*3+2]=pos[v*3+2];
+    eSeed[k]=seed[v];
+  }
+
+  /* ── shaders ── */
+  const VS=`
+  attribute vec3 aPos; attribute float aSeed;
+  uniform mat4 uMVP; uniform float uTime, uFront, uAmp, uPR, uPoint;
+  varying float vI, vFog;
+  void main(){
+    vec3 p = aPos + 0.055*vec3(
+      sin(uTime*0.31 + aSeed*6.28),
+      cos(uTime*0.24 + aSeed*5.11),
+      sin(uTime*0.19 + aSeed*4.37));
+    vec4 cp = uMVP * vec4(p,1.0);
+    gl_Position = cp;
+    float d = length(p - vec3(0.0,1.85,0.0));
+    float band = exp(-pow((d-uFront)/0.62,2.0));
+    vI = clamp(band*uAmp,0.0,1.0);
+    vFog = smoothstep(10.2,4.2,cp.w);
+    gl_PointSize = (1.7 + 4.6*vI) * uPR * uPoint * (5.2/max(cp.w,0.6));
+  }`;
+  const FS_P=`
+  precision mediump float;
+  varying float vI, vFog;
+  uniform vec3 uBase, uHot;
+  void main(){
+    vec2 c = gl_PointCoord - 0.5;
+    float r = length(c);
+    if(r>0.5) discard;
+    float a = smoothstep(0.5,0.04,r);
+    gl_FragColor = vec4(mix(uBase,uHot,vI), a*(0.30+0.70*vI)*vFog);
+  }`;
+  const FS_L=`
+  precision mediump float;
+  varying float vI, vFog;
+  uniform vec3 uBase, uHot;
+  void main(){
+    gl_FragColor = vec4(mix(uBase,uHot,vI), (0.085+0.62*vI)*vFog);
+  }`;
+
+  function sh(type,src){
+    const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  function prog(fs){
+    const p=gl.createProgram();
+    gl.attachShader(p,sh(gl.VERTEX_SHADER,VS));
+    gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));
+    gl.linkProgram(p);
+    if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
+    return p;
+  }
+  let pPoint,pLine;
+  try{pPoint=prog(FS_P);pLine=prog(FS_L)}catch(e){
+    cv.style.background="radial-gradient(ellipse 70% 60% at 68% 42%, rgba(224,162,168,.10), rgba(10,13,22,0) 62%)";
+    return;
+  }
+
+  function buf(data){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);return b}
+  const bNode=buf(pos), bNodeS=buf(seed), bEdge=buf(ePos), bEdgeS=buf(eSeed);
+
+  /* ── matrices ── */
+  const M=new Float32Array(16);
+  function mvp(aspect,ry,rx,dz){
+    const f=1/Math.tan(0.42), nf=1/(0.1-40);
+    const p=[f/aspect,0,0,0, 0,f,0,0, 0,0,(40+0.1)*nf,-1, 0,0,2*40*0.1*nf,0];
+    const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx);
+    /* view = T(0,0,-dz) · Rx · Ry  */
+    const m=[ cy,sx*sy,-cx*sy,0,
+              0, cx,    sx,    0,
+              sy,-sx*cy,cx*cy, 0,
+              0, 0,    -dz,    1];
+    for(let i=0;i<4;i++)for(let j=0;j<4;j++){
+      let s=0;for(let k=0;k<4;k++)s+=m[i*4+k]*p[k*4+j];
+      M[i*4+j]=s;
+    }
+    return M;
+  }
+
+  const BASE_P=[.19,.33,.85], HOT_P=[.94,.31,.47];      /* cobalt → coral */
+  const BASE_L=[.07,.58,.73], HOT_L=[.48,.38,1.0];      /* aqua → violet */
+
+  /* Size the drawing buffer from the canvas's own box, every frame.
+     Cheap (only touches GL when the box actually changed) and immune to
+     being measured before layout settles — fonts, hidden panes, the
+     mobile URL bar collapsing. Returns false while the box is zero. */
+  let W=0,H=0,PR=1;
+  function resize(){
+    const w=cv.clientWidth, h=cv.clientHeight;
+    if(!w||!h) return false;
+    PR=Math.min(devicePixelRatio||1,2);
+    W=w;H=h;
+    const cw=Math.round(w*PR), ch=Math.round(h*PR);
+    if(cv.width!==cw||cv.height!==ch){
+      cv.width=cw;cv.height=ch;
+      gl.viewport(0,0,cw,ch);
+    }
+    return true;
+  }
+
+  gl.disable(gl.DEPTH_TEST);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+
+  const PERIOD=9.4, SPEED=1.22;
+  let mx=0,my=0,tx=0,ty=0;
+  if(!reduce){
+    addEventListener("pointermove",e=>{
+      tx=(e.clientX/innerWidth-.5)*.22;
+      ty=(e.clientY/innerHeight-.5)*.14;
+    },{passive:true});
+  }
+
+  function draw(t){
+    const cyc=t%PERIOD;
+    const front=cyc*SPEED;
+    const amp=Math.min(1,cyc*3.2)*Math.exp(-cyc*0.42);
+    mx+=(tx-mx)*.05; my+=(ty-my)*.05;
+    const m=mvp(W/H, t*0.043+mx, -0.20+my, 7.1);
+
+    gl.clearColor(0,0,0,0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    /* edges */
+    gl.useProgram(pLine);
+    gl.uniformMatrix4fv(gl.getUniformLocation(pLine,"uMVP"),false,m);
+    gl.uniform1f(gl.getUniformLocation(pLine,"uTime"),t);
+    gl.uniform1f(gl.getUniformLocation(pLine,"uFront"),front);
+    gl.uniform1f(gl.getUniformLocation(pLine,"uAmp"),amp);
+    gl.uniform1f(gl.getUniformLocation(pLine,"uPR"),PR);
+    gl.uniform1f(gl.getUniformLocation(pLine,"uPoint"),1);
+    gl.uniform3fv(gl.getUniformLocation(pLine,"uBase"),BASE_L);
+    gl.uniform3fv(gl.getUniformLocation(pLine,"uHot"),HOT_L);
+    let a=gl.getAttribLocation(pLine,"aPos"), s=gl.getAttribLocation(pLine,"aSeed");
+    gl.bindBuffer(gl.ARRAY_BUFFER,bEdge);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bEdgeS);gl.enableVertexAttribArray(s);gl.vertexAttribPointer(s,1,gl.FLOAT,false,0,0);
+    gl.drawArrays(gl.LINES,0,eCount);
+
+    /* nodes */
+    gl.useProgram(pPoint);
+    gl.uniformMatrix4fv(gl.getUniformLocation(pPoint,"uMVP"),false,m);
+    gl.uniform1f(gl.getUniformLocation(pPoint,"uTime"),t);
+    gl.uniform1f(gl.getUniformLocation(pPoint,"uFront"),front);
+    gl.uniform1f(gl.getUniformLocation(pPoint,"uAmp"),amp);
+    gl.uniform1f(gl.getUniformLocation(pPoint,"uPR"),PR);
+    gl.uniform1f(gl.getUniformLocation(pPoint,"uPoint"),1);
+    gl.uniform3fv(gl.getUniformLocation(pPoint,"uBase"),BASE_P);
+    gl.uniform3fv(gl.getUniformLocation(pPoint,"uHot"),HOT_P);
+    a=gl.getAttribLocation(pPoint,"aPos");s=gl.getAttribLocation(pPoint,"aSeed");
+    gl.bindBuffer(gl.ARRAY_BUFFER,bNode);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,bNodeS);gl.enableVertexAttribArray(s);gl.vertexAttribPointer(s,1,gl.FLOAT,false,0,0);
+    gl.drawArrays(gl.POINTS,0,N);
+  }
+
+  if(reduce){
+    /* one static frame, mid-propagation — redrawn if the box changes */
+    const paint=()=>{ if(resize()) draw(2.6); };
+    paint();
+    new ResizeObserver(paint).observe(cv);
+    return;
+  }
+
+  let raf=null, t0=performance.now(), vis=true;
+  function loop(now){
+    raf=requestAnimationFrame(loop);
+    if(!vis||!resize())return;
+    draw((now-t0)/1000);
+  }
+  new IntersectionObserver(es=>{
+    vis=es[0].isIntersecting;
+    if(vis&&!raf)raf=requestAnimationFrame(loop);
+    else if(!vis&&raf){cancelAnimationFrame(raf);raf=null}
+  },{threshold:0}).observe(cv);
+  raf=requestAnimationFrame(loop);
+  document.addEventListener("visibilitychange",()=>{
+    if(document.hidden&&raf){cancelAnimationFrame(raf);raf=null}
+    else if(!document.hidden&&!raf){t0=performance.now()-2600;raf=requestAnimationFrame(loop)}
+  });
+})();
+
+/* ══════════════════════ page chrome ═══════════════════════ */
+document.getElementById("yr").textContent=new Date().getFullYear();
+
+const nav=document.getElementById("nav");
+addEventListener("scroll",()=>{nav.classList.toggle("solid",scrollY>40)},{passive:true});
+
+/* mobile navigation */
+const menuToggle=document.querySelector(".menu-toggle");
+menuToggle.addEventListener("click",()=>{
+  const open=nav.classList.toggle("nav-open");
+  menuToggle.setAttribute("aria-expanded",String(open));
+  menuToggle.setAttribute("aria-label",open?"Close site navigation":"Open site navigation");
+});
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>{
+  nav.classList.remove("nav-open");
+  menuToggle.setAttribute("aria-expanded","false");
+  menuToggle.setAttribute("aria-label","Open site navigation");
+}));
+
+/* active section indicator */
+const navMap=new Map([...document.querySelectorAll(".nav-links a")].map(a=>[a.getAttribute("href").slice(1),a]));
+const clearNavAtTop=()=>{if(scrollY<240)navMap.forEach(a=>a.classList.remove("active"))};
+addEventListener("scroll",clearNavAtTop,{passive:true});
+clearNavAtTop();
+const sectionObserver=new IntersectionObserver(entries=>{
+  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(!visible)return;
+  navMap.forEach(a=>a.classList.remove("active"));
+  navMap.get(visible.target.id)?.classList.add("active");
+},{rootMargin:"-20% 0px -65% 0px",threshold:[0,.15,.45]});
+document.querySelectorAll("main section[id]").forEach(s=>sectionObserver.observe(s));
+
+/* subtle pointer-responsive depth for key cards */
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches && matchMedia("(pointer:fine)").matches){
+  document.querySelectorAll(".pa,.stat").forEach(card=>{
+    card.addEventListener("pointermove",e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty("--ry",((e.clientX-r.left)/r.width-.5)*7+"deg");
+      card.style.setProperty("--rx",-((e.clientY-r.top)/r.height-.5)*7+"deg");
+    });
+    card.addEventListener("pointerleave",()=>{
+      card.style.setProperty("--ry","0deg");card.style.setProperty("--rx","0deg");
+    });
+  });
+}
+
+function drawCharts(){chart1();chart2();chart3();}
+drawCharts();tables();
+/* offsets are baked in at build time, so rebuild when the breakpoint flips */
+MQ.addEventListener?MQ.addEventListener("change",drawCharts):MQ.addListener(drawCharts);
+</script>
+</body>
+</html>
