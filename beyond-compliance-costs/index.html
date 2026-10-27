@@ -48,7 +48,7 @@
 <details class="exact-results"><summary>Inspect the exact calculation</summary><div class="table-scroll"><table><caption>Calculated results for the selected assumptions</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th></tr></thead><tbody id="exact-results"></tbody></table></div></details>
 </div>
 <aside class="controls" aria-label="Model controls"><h3>Your assumptions</h3>
-<label for="basis">Time basis</label><select id="basis"><option value="equivalent">Equivalent annual · discounted appraisal</option><option value="first">First year only</option><option value="ongoing">Ongoing year only</option></select><p class="control-help" id="basis-help"></p>
+<label for="basis">Time basis</label><select id="basis"><option value="equivalent">Equivalent annual</option><option value="first">First year only</option><option value="ongoing">Ongoing year only</option></select><p class="control-help" id="basis-help"></p>
 <div class="control"><label for="loss">Social loss per extra failure <output id="loss-out" for="loss">A$10m</output></label><input type="range" id="loss" min="1" max="50" step="0.5" value="10"><div class="range-ends"><span>A$1m</span><span>A$50m</span></div></div>
 <div class="control"><label for="risk">Additional annual failure risk <output id="risk-out" for="risk">1.00 pp</output></label><input type="range" id="risk" min="0" max="6" step="0.05" value="1"><div class="range-ends"><span>0 pp</span><span>6 pp</span></div></div>
 <div class="control"><label for="realized">Share of savings realised <output id="realized-out" for="realized">100%</output></label><input type="range" id="realized" min="0" max="100" step="5" value="100"><div class="range-ends"><span>0%</span><span>100%</span></div><p class="control-help">Allows for reporting that continues privately or savings that are not fully realised. This adjusts savings only; risk remains a separate assumption.</p></div>
@@ -82,4 +82,5 @@
 <div id="toast" role="status" aria-live="polite"></div><dialog id="share-dialog"><h2>Share this view</h2><p>Copy this link with your selected model assumptions.</p><input id="share-url" aria-label="Shareable URL" readonly><button id="close-share" class="button primary">Close</button></dialog>
 <noscript><p class="wrap">Enable JavaScript to use the interactive model. The source audit and policy explanation remain available above.</p></noscript>
 </body></html>
+
 
