@@ -13,7 +13,7 @@
   ],
   "sha256": {
     "model.mjs": "02aeae5d5924e8642888e0a878d994a4795cccb96323635e1fd0a67791dd9434",
-    "app.mjs": "b21084831e21847a65d56a04aba364ecf5b709aca87316177981a1a1b9d68feb",
+    "app.mjs": "d3a757edd107f778dca7cbea9fa27f5ff2cdd31fa43d4282e820896b64798caa",
     "data/source-register.json": "ba938469b7aab8029b11ab843c38aacf53f0aa2f0d858624e1188e7b9d557b35"
   }
 }

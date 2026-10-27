@@ -5,7 +5,7 @@ const money=(n,d=2)=>'A$'+fmt(n,d)+'m';
 const signedMoney=(n,d=2)=>(n<0?'−':'+')+money(Math.abs(n),d);
 let state=cleanState(Object.fromEntries(new URLSearchParams(location.search)));
 let lastViewportKind=null;let view='3d', timer, rendering=false, pending=false, plotReady=false, has3d=!!window.Plotly;
-const phoneCamera={eye:{x:2.7,y:2.7,z:1.8},center:{x:0,y:0,z:0}};const camera={eye:{x:1.15,y:1.15,z:.8},center:{x:0,y:0,z:-.08}};
+const phoneCamera={eye:{x:2.7,y:2.7,z:1.8},center:{x:0,y:0,z:0}};const camera={eye:{x:1.65,y:1.65,z:1.05},center:{x:0,y:0,z:-.08}};
 const labels={equivalent:'Equivalent annual basis',first:'First-year basis',ongoing:'Ongoing-year basis'};
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').style.display='none',3500);}
 function viewURL(){const u=new URL(location.href);u.search='';for(const[k,v]of Object.entries(state))u.searchParams.set(k,v);u.hash='explore';return u.href;}
@@ -82,7 +82,7 @@ async function draw3d(){
  {type:'scatter3d',mode:'markers',x:[state.loss],y:[state.risk],z:[r.net*factor],marker:{size:6,color:'#163f52',line:{color:'#fff7f1',width:2}},name:'Your assumptions',hovertemplate:'Your assumptions<br>Loss: A$%{x:.2f}m<br>Extra risk: %{y:.3f} pp<br>Net benefit: A$%{z:,.2f}m<extra></extra>',showlegend:false}
  ];
  const axis={showbackground:true,backgroundcolor:'#f8f1ee',gridcolor:'#d9ccce',zerolinecolor:'#8d999b',tickfont:{family:'Georgia',size:15},title:{font:{family:'Georgia',size:17}},showspikes:false};
- const layout={autosize:true,paper_bgcolor:'#f8f1ee',plot_bgcolor:'#f8f1ee',font:{family:'Georgia,serif',size:17,color:'#163f52'},margin:{l:10,r:10,t:15,b:10},showlegend:false,uirevision:'retain-camera-'+viewportKind,scene:{camera:resetView?selectedCamera:undefined,aspectmode:'manual',aspectratio:{x:1.25,y:1,z:.8},xaxis:{...axis,title:{text:'Loss per failure (A$m)',font:{size:17}},range:[1,50],tickvals:[1,10,20,30,40,50]},yaxis:{...axis,title:{text:viewportKind==='mobile'?'Extra risk (pp)':'Extra annual risk (pp)',font:{size:17}},range:[0,6],dtick:1},zaxis:{...axis,title:{text:pv?'NPV (A$m)':'Net benefit (A$m)',font:{size:17}},tickformat:',.0f',nticks:5}}};
+ const layout={autosize:true,paper_bgcolor:'#f8f1ee',plot_bgcolor:'#f8f1ee',font:{family:'Georgia,serif',size:17,color:'#163f52'},margin:{l:10,r:10,t:15,b:10},showlegend:false,uirevision:'retain-camera-'+viewportKind,scene:{camera:resetView?selectedCamera:undefined,aspectmode:'manual',aspectratio:{x:1.25,y:1,z:.8},xaxis:{...axis,title:{text:'Loss per failure (A$m)',font:{size:17}},range:[1,50],tickvals:[1,10,20,30,40,50]},yaxis:{...axis,title:{text:viewportKind==='mobile'?'Extra risk (pp)':'Extra annual risk (pp)',font:{size:17}},range:[0,6],dtick:1},zaxis:{...axis,title:{text:pv?'NPV (A$m)':'Net benefit (A$m)',font:{size:17}},tickformat:viewportKind==='mobile'?'~s':',.0f',nticks:5}}};
  await Plotly.react($('surface'),data,layout,{responsive:true,displaylogo:false,scrollZoom:true,modeBarButtonsToRemove:['toImage','resetCameraLastSave3d'],displayModeBar:'hover'});
  lastViewportKind=viewportKind;if(!plotReady){$('surface').on('plotly_webglcontextlost',fail3d);plotReady=true;}
  }catch(error){console.error('3D rendering failed',error);fail3d();}
@@ -117,6 +117,7 @@ function company(){
 for(const k of['revenue','assets','employees'])$(k).addEventListener('input',company);
 async function sources(){try{const response=await fetch('data/source-register.json');if(!response.ok)throw new Error('Source register unavailable');const d=await response.json();$('sources').replaceChildren(...d.sources.map(s=>{const el=document.createElement('div');el.className='source-item';const title=document.createElement(s.url?'a':'strong');title.textContent=s.title+(s.url?' ↗':'');if(s.url){title.href=s.url;title.target='_blank';title.rel='noopener';}el.append(title);const desc=document.createElement('p');desc.textContent=s.date+' · '+s.location+'. '+s.supports;el.append(desc);return el;}));}catch{$('sources').textContent='The machine-readable source register could not load. Source links and the full audit remain in the page; reload to try again.';}}
 window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(draw3d,200);});update(false);company();sources();
+
 
 
 
