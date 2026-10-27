@@ -1,0 +1,15 @@
+// Monetary values use AUD millions unless explicitly stated.
+export const FIRMS=1535;
+export const SCENARIOS=Object.freeze({
+ treasury:Object.freeze({label:'Treasury benchmark',first:210,ongoing:210,note:'The announcement says “over A$210m each year”. A$210m is a modelling benchmark, not the exact official estimate.'}),
+ earlier:Object.freeze({label:'Earlier cost assumptions',first:FIRMS*(36950+.05*45050)/1e6,ongoing:FIRMS*(36950+.05*36950)/1e6,note:'Author reconstruction using earlier Treasury unit costs, with climate reporting costs assigned to 5% of firms. Not an official reform estimate.'}),
+ mandala:Object.freeze({label:'Mandala published aggregates',first:177+34+344,ongoing:177+19+197,note:'Published rounded aggregate components on pp. 32–33 of the November 2025 report. The report’s per-firm figures do not fully reconcile to its aggregates.'})
+});
+export const DEFAULTS=Object.freeze({scenario:'treasury',basis:'equivalent',loss:10,risk:1,realized:100,years:10,discount:7});
+const bounds={loss:[1,50],risk:[0,6],realized:[0,100],years:[1,30],discount:[0,10]};
+export function cleanState(input={}){const s={...DEFAULTS};if(Object.hasOwn(SCENARIOS,input.scenario))s.scenario=input.scenario;if(['equivalent','first','ongoing'].includes(input.basis))s.basis=input.basis;for(const[k,[min,max]]of Object.entries(bounds)){if(input[k]!==undefined&&input[k]!==''&&Number.isFinite(Number(input[k])))s[k]=Math.min(max,Math.max(min,Number(input[k])));}s.years=Math.round(s.years);return s;}
+export function annuity(years,rate){if(!Number.isInteger(years)||years<1||rate<0||!Number.isFinite(rate))throw new RangeError('Invalid appraisal settings');return Array.from({length:years},(_,i)=>(1+rate)**(-i-1)).reduce((a,b)=>a+b,0);}
+export function savingsProfile(scenario,years,rate){const s=SCENARIOS[scenario];if(!s)throw new RangeError('Unknown scenario');const factor=annuity(years,rate),pv=s.first/(1+rate)+s.ongoing*(factor-1/(1+rate));return{...s,pv,factor,equivalent:pv/factor};}
+export function calculate(input){const s=cleanState(input),p=savingsProfile(s.scenario,s.years,s.discount/100),gross=s.basis==='first'?p.first:s.basis==='ongoing'?p.ongoing:p.equivalent,annualSavings=gross*s.realized/100,annualHarm=FIRMS*s.loss*s.risk/100,net=annualSavings-annualHarm,thresholdPP=annualSavings/(FIRMS*s.loss)*100,discounted=s.basis==='equivalent';return{state:s,profile:p,gross,annualSavings,annualHarm,net,thresholdPP,perFirmAUD:annualSavings*1e6/FIRMS,extraFailures:annualSavings/s.loss,reciprocal:thresholdPP>0?100/thresholdPP:null,pvSavings:discounted?p.pv*s.realized/100:null,pvHarm:discounted?annualHarm*p.factor:null,npv:discounted?net*p.factor:null};}
+export function classify(revenue,assets,employees){if([revenue,assets,employees].some(x=>!Number.isFinite(x)||x<0))throw new RangeError('Company inputs must be nonnegative');const current=[revenue>=50,assets>=25,employees>=100],proposed=[revenue>=100,assets>=50,employees>=100];return{current,proposed,currentLarge:current.filter(Boolean).length>=2,proposedLarge:proposed.filter(Boolean).length>=2};}
+

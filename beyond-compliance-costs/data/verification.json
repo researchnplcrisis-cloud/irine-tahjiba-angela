@@ -1,0 +1,19 @@
+{
+  "evidence_date": "2026-10-27",
+  "independent_method": "Python Decimal at 45 digits; closed-form annuity cross-check against JavaScript explicit discount-factor sum",
+  "vectors_checked": 3888,
+  "absolute_tolerance": 1e-08,
+  "maximum_absolute_difference": 3.454685111786324e-11,
+  "units": "AUD millions, except threshold in percentage points",
+  "model_tests_passed": 10,
+  "known_source_limitations": [
+    "Original workbook not supplied; reconstruction uses documented assumptions.",
+    "Mandala unit costs do not fully reconcile with published aggregates; aggregate profile retained.",
+    "Inputs are rounded estimates from different price vintages; no inflation rebasing."
+  ],
+  "sha256": {
+    "model.mjs": "02aeae5d5924e8642888e0a878d994a4795cccb96323635e1fd0a67791dd9434",
+    "app.mjs": "b21084831e21847a65d56a04aba364ecf5b709aca87316177981a1a1b9d68feb",
+    "data/source-register.json": "ba938469b7aab8029b11ab843c38aacf53f0aa2f0d858624e1188e7b9d557b35"
+  }
+}

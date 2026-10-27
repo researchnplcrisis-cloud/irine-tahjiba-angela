@@ -1,0 +1,121 @@
+{
+  "evidence_date": "2026-10-27",
+  "currency": "AUD",
+  "caveat": "Scenario calculations; no estimated causal effect of the reform on failure risk. Original model workbook not provided.",
+  "sources": [
+    {
+      "id": "article",
+      "title": "The Cost of Regulation Is Not the Same as the Cost of Bad Regulation",
+      "date": "Supplied draft",
+      "url": null,
+      "location": "User-supplied DOCX, including Charts 1 and 2",
+      "supports": "Research question, illustrative failure loss, ten-year appraisal and author recommendations."
+    },
+    {
+      "id": "chalmers2026",
+      "title": "Treasurer — Raising reporting thresholds for proprietary companies",
+      "date": "19 October 2026",
+      "url": "https://ministers.treasury.gov.au/ministers/jim-chalmers-2022/media-releases/raising-reporting-thresholds-proprietary-companies",
+      "location": "Media release",
+      "supports": "Over A$210m annual savings; A$100m revenue and A$50m assets; proposed financial-year commencement; consultation deadline."
+    },
+    {
+      "id": "consult2026",
+      "title": "Treasury consultation c2026-811281",
+      "date": "October 2026",
+      "url": "https://consult.treasury.gov.au/c2026-811281",
+      "location": "Consultation overview and linked drafts",
+      "supports": "Two-of-three test, monetary thresholds and 2 November deadline. Page lists opening as 18 October; media announcement is 19 October."
+    },
+    {
+      "id": "asic",
+      "title": "ASIC — Are you a large or small proprietary company?",
+      "date": "Checked 27 October 2026",
+      "url": "https://www.asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company",
+      "location": "Current definition and reporting scope",
+      "supports": "A$50m revenue, A$25m assets, 100 employees; two criteria; some small companies also report."
+    },
+    {
+      "id": "mandala2025",
+      "title": "Mandala for AICD — $160 billion and counting",
+      "date": "November 2025",
+      "url": "https://www.aicd.com.au/content/dam/aicd/pdf/news-media/research/2025/economic-cost-of-regulatory-complexity-report.pdf",
+      "location": "Printed pp. 32–33 and 43 (PDF pages 32–33 and 43)",
+      "supports": "Aggregate financial savings 177m, climate savings 34m/344m first year and 19m/197m ongoing; about 1,535 firms. Aggregate scenario retained because unit costs do not fully reconcile."
+    },
+    {
+      "id": "treasury2023",
+      "title": "Treasury — Climate-related financial disclosures policy impact analysis",
+      "date": "September 2023",
+      "url": "https://treasury.gov.au/sites/default/files/2024-01/c2024-466491-pia.pdf",
+      "location": "Printed pp. 25–27; Tables 10 and 12; Option 1a",
+      "supports": "Group 3 unit costs 45,050 first year and 36,950 ongoing; 5% material climate-risk assumption. Used for an author reconstruction, not a contemporary official estimate."
+    },
+    {
+      "id": "historical",
+      "title": "Treasury — Reducing the financial reporting burden for SMEs",
+      "date": "Historical factsheet for 2019 reform",
+      "url": "https://treasury.gov.au/small-business/frt/factsheet",
+      "location": "Expected impact",
+      "supports": "About 2,200 companies reclassified; 81.3m annual regulatory savings implies the 36,950 financial-reporting unit cost."
+    },
+    {
+      "id": "budget2026",
+      "title": "Australian Government — 2026–27 regulatory reform factsheet",
+      "date": "2026–27 Budget",
+      "url": "https://budget.gov.au/content/factsheets/download/factsheet-regulatory-reform.pdf",
+      "location": "pp. 1–2",
+      "supports": "10.2bn annual reduction once fully implemented; separate package-wide measure."
+    },
+    {
+      "id": "mandala2026",
+      "title": "Mandala — The Stagnant Nation",
+      "date": "7 October 2026",
+      "url": "https://mandalapartners.com/reports/The-Stagnant-Nation",
+      "location": "Report summary",
+      "supports": "160bn annual compliance burden and 5.8% of GDP; separate from reform savings."
+    },
+    {
+      "id": "discount",
+      "title": "Australian Centre for Evaluation — Guide to cost-benefit analysis",
+      "date": "July 2025",
+      "url": "https://evaluation.treasury.gov.au/sites/evaluation.treasury.gov.au/files/2025-07/guide-cost-benefit-analysis.pdf",
+      "location": "Discount rate guidance",
+      "supports": "7% real central discount rate; sensitivities at 3% and 10%."
+    },
+    {
+      "id": "minnis2011",
+      "title": "Minnis (2011) — Financial statement verification and debt financing",
+      "date": "2011",
+      "url": "https://doi.org/10.1111/j.1475-679X.2011.00411.x",
+      "location": "Journal of Accounting Research 49(2), 457–506; abstract",
+      "supports": "US private firms; association of audited statements with lower debt cost. Not an estimate of this proposal's effect."
+    },
+    {
+      "id": "kausar2016",
+      "title": "Kausar, Shroff & White (2016) — Real effects of the audit choice",
+      "date": "2016",
+      "url": "https://dspace.mit.edu/entities/publication/aefe9c47-3307-4c13-bcc7-3959d45448b3",
+      "location": "Journal of Accounting and Economics 62(1), 157–181; author manuscript and abstract",
+      "supports": "UK voluntary-audit signalling among firms that continue receiving audits; no Australian failure-risk parameter."
+    }
+  ],
+  "inputs": {
+    "firms": 1535,
+    "treasury_annual_benchmark_m": 210,
+    "treasury_qualifier": "over",
+    "earlier_financial_cost_per_firm": 36950,
+    "earlier_climate_first_per_disclosing_firm": 45050,
+    "earlier_climate_ongoing_per_disclosing_firm": 36950,
+    "disclosing_share": 0.05,
+    "mandala_aggregate_first_m": 555,
+    "mandala_aggregate_ongoing_m": 393
+  },
+  "defaults": {
+    "years": 10,
+    "real_discount_rate": 0.07,
+    "loss_per_failure_m": 10,
+    "additional_risk_percentage_points": 1,
+    "savings_realization_percent": 100
+  }
+}
